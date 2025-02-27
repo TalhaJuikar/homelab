@@ -7,4 +7,3 @@ resources:
 - kube-prometheus/helm-repository.yaml
 - kube-prometheus/helm-release.yaml
 - ingressroute.yaml
-- test-serv.yaml
