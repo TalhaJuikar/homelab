@@ -4,5 +4,7 @@ metadata:
   name: it-tools
   namespace: it-tools
 resources:
+  - namespace.yaml
   - deployment.yaml
+  - service.yaml
   - ingressroute.yaml

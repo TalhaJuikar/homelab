@@ -32,20 +32,3 @@ spec:
           }
         }
 status: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: it-tools
-  name: it-tools
-  namespace: it-tools
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: it-tools
-  type: ClusterIP
-status: {}
