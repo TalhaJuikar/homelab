@@ -21,6 +21,5 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
-        namespace: monitoring
   values:
     namespaceOverride: "monitoring"
