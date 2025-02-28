@@ -4,6 +4,5 @@ metadata:
   name: monitoring
 resources:
 - namespace.yaml
-# - kube-prometheus/helm-repository.yaml
-# - kube-prometheus/helm-release.yaml
+- helm.yaml
 - ingressroute.yaml
