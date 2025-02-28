@@ -3,17 +3,6 @@ kind: Kustomization
 metadata:
   name: it-tools
   namespace: it-tools
-spec:
-  targetNamespace: it-tools
-  interval: 1h
-  retryInterval: 2m
-  timeout: 5m
-  wait: true
-  prune: true
-  path: "./"
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
 resources:
   - namespace.yaml
   - deployment.yaml
