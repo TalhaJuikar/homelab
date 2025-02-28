@@ -5,4 +5,4 @@ resources:
 - gotk-sync.yaml
 - capacitor-ui.yaml
 - it-tools.yaml
-- kube-prometheus-stack.yaml
+  #- kube-prometheus-stack.yaml
