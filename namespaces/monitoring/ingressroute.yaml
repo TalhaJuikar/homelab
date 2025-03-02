@@ -15,5 +15,3 @@ spec:
       services:
         - name: kube-prometheus-grafana
           port: 80
-  tls:
-    secretName: plutolab-live-tls
