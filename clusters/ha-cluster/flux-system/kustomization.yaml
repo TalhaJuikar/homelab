@@ -6,3 +6,5 @@ resources:
 - capacitor-ui.yaml
 - it-tools.yaml
 - kube-prometheus-stack.yaml
+- monitoring.yaml
+- kubernetes-dashboard.yaml
