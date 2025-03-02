@@ -15,5 +15,3 @@ spec:
       services:
         - name: it-tools
           port: 80
-  tls:
-    secretName: plutolab-live-tls
