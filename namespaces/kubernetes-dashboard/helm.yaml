@@ -17,7 +17,6 @@ spec:
   chart:
     spec:
       chart: kubernetes-dashboard
-      namespace: kubernetes-dashboard
       version: "*"
       sourceRef:
         kind: HelmRepository
