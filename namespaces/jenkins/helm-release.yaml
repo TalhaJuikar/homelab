@@ -15,4 +15,5 @@ spec:
   values:
     namespaceOverride: "jenkins"
     controller:
-      adminPassword: "Network@123"
+      admin:
+        password: "jenkinspassword123"
