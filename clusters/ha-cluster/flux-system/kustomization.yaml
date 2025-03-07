@@ -8,3 +8,4 @@ resources:
 - it-tools.yaml
 - kube-prometheus-stack.yaml
 - kubernetes-dashboard.yaml
+- longhorn.yaml
