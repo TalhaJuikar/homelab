@@ -13,4 +13,4 @@ spec:
         kind: HelmRepository
         name: longhorn-repo
   values:
-    metrics.serviceMonitor.enabled: true
+    metrics.serviceMonitor.enabled: false
