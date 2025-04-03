@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`longhorn.k8s.plutolab.live`)
+    - match: Host(`longhorn.rke2.plutolab.live`)
       kind: Rule
       services:
         - name: longhorn-frontend
