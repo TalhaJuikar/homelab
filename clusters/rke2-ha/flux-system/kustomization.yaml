@@ -5,3 +5,4 @@ resources:
 - gotk-sync.yaml
 - longhorn.yaml
 - it-tools.yaml
+- jenkins.yaml
