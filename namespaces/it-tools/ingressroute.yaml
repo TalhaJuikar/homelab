@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`tools.rke2.plutolab.live`)
+    - match: Host(`tools.plutolab.live`)
       kind: Rule
       services:
         - name: it-tools
