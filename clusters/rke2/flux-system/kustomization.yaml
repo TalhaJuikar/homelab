@@ -6,3 +6,4 @@ resources:
 - longhorn.yaml
 - it-tools.yaml
 - jenkins.yaml
+- kube-prometheus-stack.yaml
