@@ -37,7 +37,7 @@ spec:
             whenDeleted: Retain
             whenScaled: Retain
           retention: 30d
-          retentionSize: 90Gi
+
     alertmanager:
         alertmanagerSpec:
           storage:
