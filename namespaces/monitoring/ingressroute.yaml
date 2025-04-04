@@ -10,8 +10,13 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`grafana.k8s.plutolab.live`)
+    - match: Host(`grafana.plutolab.live`)
       kind: Rule
       services:
         - name: kube-prometheus-grafana
           port: 80
+    - match: Host('prometheus.plutolab.live')
+      kind: Rule
+      services:
+        - name: kube-prometheus-kube-prome-prometheus
+          port: 9090
