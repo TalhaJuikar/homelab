@@ -14,3 +14,7 @@ spec:
         name: jenkins
   values:
     namespaceOverride: "jenkins"
+    persistence:
+      enabled: true
+      accessModes: "ReadWriteOnce"
+      size: 50Gi
