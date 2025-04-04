@@ -9,7 +9,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`jenkins.rke2.plutolab.live`)
+    - match: Host(`jenkins.plutolab.live`)
       kind: Rule
       services:
         - name: jenkins
