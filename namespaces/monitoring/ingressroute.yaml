@@ -15,7 +15,7 @@ spec:
       services:
         - name: kube-prometheus-grafana
           port: 80
-    - match: Host('prometheus.plutolab.live')
+    - match: Host(`prometheus.plutolab.live`)
       kind: Rule
       services:
         - name: kube-prometheus-kube-prome-prometheus
