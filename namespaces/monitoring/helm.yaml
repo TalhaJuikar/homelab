@@ -33,11 +33,7 @@ spec:
                   requests:
                     storage: 100Gi
               selector: {}
-          persistentVolumeClaimRetentionPolicy:
-            whenDeleted: Retain
-            whenScaled: Retain
           retention: 30d
-
     alertmanager:
         alertmanagerSpec:
           storage:
@@ -48,6 +44,3 @@ spec:
                   requests:
                     storage: 20Gi
               selector: {}
-          persistentVolumeClaimRetentionPolicy:
-            whenDeleted: Retain
-            whenScaled: Retain
