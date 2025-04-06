@@ -18,7 +18,7 @@ spec:
     persistence:
       enabled: true
       accessModes: "ReadWriteOnce"
-      size: 50Gi
+      size: 60Gi
     admin:
       existingSecret: "jenkins-admin-secret"
       createSecret: false
