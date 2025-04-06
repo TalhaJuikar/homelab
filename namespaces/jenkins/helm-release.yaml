@@ -14,7 +14,10 @@ spec:
         name: jenkins
   values:
     namespaceOverride: "jenkins"
+    clusterZone: "plutolab.live"
     persistence:
       enabled: true
       accessModes: "ReadWriteOnce"
       size: 50Gi
+    admin:
+      existingSecret: "jenkins-admin-secret"

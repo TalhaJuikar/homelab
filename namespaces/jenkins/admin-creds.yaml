@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: jenkins-admin-secret
+  namespace: jenkins
+type: Opaque
+data:
+  # -- The key in the existing admin secret containing the username
+  jenkins-admin-user: YWRtaW4=
+  # -- The key in the existing admin secret containing the password
+  jenkins-admin-password: bW9ycGhldXM2MTk=
