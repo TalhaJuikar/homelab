@@ -5,7 +5,7 @@ metadata:
   namespace: jenkins
 resources:
   - namespace.yaml
-  - admin-creds.yaml
+  # - admin-creds.yaml
   - helm-repo.yaml
   - helm-release.yaml
   - ingressroute.yaml
