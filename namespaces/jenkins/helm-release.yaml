@@ -21,3 +21,4 @@ spec:
       size: 50Gi
     admin:
       existingSecret: "jenkins-admin-secret"
+      createSecret: false
