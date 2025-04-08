@@ -19,7 +19,7 @@ spec:
   - websecure
   routes:
   - kind: Rule
-    match: Host(`dash.k8s.plutolab.live`)
+    match: Host(`k8s-dash.plutolab.live`)
     services:
     - name: kubernetes-dashboard-kong-proxy
       namespace: kubernetes-dashboard
