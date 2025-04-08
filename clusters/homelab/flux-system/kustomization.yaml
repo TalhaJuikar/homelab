@@ -6,5 +6,5 @@ resources:
 # - longhorn.yaml
 - it-tools.yaml
 - kube-prometheus-stack.yaml
- - jenkins.yaml
- - metrics-server.yaml
+- jenkins.yaml
+- metrics-server.yaml
