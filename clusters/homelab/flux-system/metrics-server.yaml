@@ -6,7 +6,7 @@ metadata:
 spec:
   targetNamespace: default
   interval: 10m0s
-  path: ./namespaces/longhorn-system
+  path: ./namespaces/default/metrics-server
   prune: true
   sourceRef:
     kind: GitRepository
