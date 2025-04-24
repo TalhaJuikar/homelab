@@ -1,7 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: flux-image-test-git
+  name: flux-image-test
   namespace: flux-system
 spec:
   interval: 1m
