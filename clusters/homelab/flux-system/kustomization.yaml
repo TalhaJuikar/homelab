@@ -1,8 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- gitrepository/flux-image-test.yaml
-- imagerepository/flux-image-test.yaml
+# - gitrepository/flux-image-test.yaml
+# - imagerepository/flux-image-test.yaml
 - gotk-components.yaml
 - gotk-sync.yaml
 # - longhorn.yaml
