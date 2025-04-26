@@ -13,4 +13,5 @@ spec:
         kind: HelmRepository
         name: longhorn-repo
   values:
-    metrics.serviceMonitor.enabled: true
+    persistence:
+      reclaimPolicy: Retain
