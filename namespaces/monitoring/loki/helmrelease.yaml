@@ -33,7 +33,6 @@ spec:
             schema: v13
       limits_config:
         retention_period: 4d
-        ingestion_time_limit: 72h
         ingestion_rate_mb: 10
         ingestion_burst_size_mb: 20
     singleBinary:
