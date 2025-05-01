@@ -45,12 +45,6 @@ spec:
                     storage: 100Gi
               selector: {}
           retention: 30d
-        # additionalScrapeConfigs:
-        #     - job_name: 'gitlab'
-        #       static_configs:
-        #         - targets: ['gitlab.plutolab.live:443']
-        #       metrics_path: '/-/metrics'
-        #       scheme: https
     alertmanager:
         alertmanagerSpec:
           storage:

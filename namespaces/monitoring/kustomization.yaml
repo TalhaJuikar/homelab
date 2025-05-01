@@ -4,8 +4,7 @@ metadata:
   name: monitoring
 resources:
 - namespace.yaml
-- helm.yaml
-- grafana-repo.yaml
-- loki-helm.yaml
-- promtail.yaml
+- kube-promehteus-stack
+- loki
+- promtail
 - ingressroute.yaml
