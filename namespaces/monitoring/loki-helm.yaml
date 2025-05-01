@@ -50,6 +50,10 @@ spec:
         size: 10Gi
         storageClass: longhorn
     monitoring:
+      serviceMonitor:
+        enabled: true
+        labels:
+          release: kube-prometheus
       selfMonitoring:
         enabled: false
         grafanaAgent:
