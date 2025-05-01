@@ -20,7 +20,7 @@ spec:
       auth_enabled: false
       commonConfig:
         replication_factor: 1
-	    storage:
+      storage:
         type: "filesystem"
       schemaConfig:
         configs:
@@ -31,6 +31,8 @@ spec:
               period: 24h
             object_store: filesystem
             schema: v13
+      limits_config:
+        retention_period: 4d
     singleBinary:
       replicas: 1
       persistence:
