@@ -7,4 +7,5 @@ resources:
 - helm.yaml
 - grafana-repo.yaml
 - loki-helm.yaml
+- promtail.yaml
 - ingressroute.yaml
