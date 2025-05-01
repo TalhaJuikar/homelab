@@ -7,4 +7,5 @@ resources:
 - kube-promehteus-stack
 - loki
 - promtail
+- dashboards
 - ingressroute.yaml
