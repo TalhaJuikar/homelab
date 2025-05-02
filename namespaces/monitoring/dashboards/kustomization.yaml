@@ -5,7 +5,7 @@ namespace: monitoring
 # - harbor.yaml
 # - cloudnativepg.yaml
 configMapGenerator:
-  - name: InfraServices-dashboard
+  - name: infra-services-dashboard
     files:
       - traefik.json
       - harbor.json
