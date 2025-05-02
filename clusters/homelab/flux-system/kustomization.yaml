@@ -10,3 +10,4 @@ resources:
 - kube-prometheus-stack.yaml
 # - jenkins.yaml
 - metrics-server.yaml
+- blog-website.yaml
