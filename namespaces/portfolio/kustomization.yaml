@@ -11,5 +11,5 @@ resources:
 
 images:
   - name: blog-website
-    newName: ghcr.io/talhajuikar/talhajuikar.github.io # {"$imagepolicy": "flux-system:blog-policy:name"}
-    newTag: 1.0.31 # {"$imagepolicy": "flux-system:blog-policy:tag"}
+    newName: ghcr.io/talhajuikar/talhajuikar.github.io # {"$imagepolicy": "portfolio:blog-policy:name"}
+    newTag: 1.0.31 # {"$imagepolicy": "portfolio:blog-policy:tag"}
