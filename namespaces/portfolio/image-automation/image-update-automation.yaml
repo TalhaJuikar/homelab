@@ -16,7 +16,7 @@ spec:
       author:
         email: fluxcdbot@users.noreply.github.com
         name: Flux CD Bot
-      messageTemplate: "Update blog image to {{.NewTag}}"
+      messageTemplate: "Update image tags for {{range .Updated.Images}}{{.}}{{end}}"
     push:
       branch: main
   update:
