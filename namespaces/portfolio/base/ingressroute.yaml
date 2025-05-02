@@ -6,7 +6,7 @@ metadata:
     kubernetes.io/ingress.class: traefik-external
 spec:
   entryPoints:
-    - websecure
+    - web
   routes:
     - match: Host(`talhajuikar.cloud`)
       kind: Rule
