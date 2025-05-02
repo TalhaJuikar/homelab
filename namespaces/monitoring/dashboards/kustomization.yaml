@@ -5,6 +5,9 @@ resources:
 - harbor.yaml
 - cloudnativepg.yaml
 configMapGenerator:
-- name: traefik-dashboard
-  files:
-  - traefik.json
+  - name: traefik-dashboard
+    files:
+      - traefik.json
+    options:
+      labels:
+        grafana_dashboard: "1"
