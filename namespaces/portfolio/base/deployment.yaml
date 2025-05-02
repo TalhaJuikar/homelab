@@ -15,7 +15,7 @@ spec:
         app: blog
     spec:
       imagePullSecrets:
-        - name: github-registry-secret
+        - name: blog-website-ghcr
       containers:
         - name: blog-website
           image: blog-website:latest
