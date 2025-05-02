@@ -8,8 +8,7 @@ resources:
   - image-automation/image-policy.yaml
   - image-automation/image-repository.yaml
   - image-automation/image-update-automation.yaml
-
 images:
   - name: blog-website
     newName: ghcr.io/talhajuikar/talhajuikar.github.io # {"$imagepolicy": "portfolio:blog-policy:name"}
-    newTag: 1.0.31 # {"$imagepolicy": "portfolio:blog-policy:tag"}
+    newTag: 1.0.32 # {"$imagepolicy": "portfolio:blog-policy:tag"}
