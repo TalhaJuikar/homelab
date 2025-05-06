@@ -16,15 +16,24 @@ spec:
     spec:
       imagePullSecrets:
         - name: blog-website-ghcr
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 101
       containers:
         - name: blog-website
           image: blog-website:latest
+          securityContext:
+            runAsUser: 101
+            allowPrivilegeEscalation: false
+          env:
+            - name: TZ
+              value: "UTC"
           ports:
             - containerPort: 80
           resources:
             limits:
               cpu: "0.5"
-              memory: "256Mi"
+              memory: "512Mi"
             requests:
               cpu: "0.2"
               memory: "128Mi"
