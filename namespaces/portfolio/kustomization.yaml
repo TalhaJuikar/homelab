@@ -11,4 +11,4 @@ resources:
 images:
   - name: blog-website
     newName: ghcr.io/talhajuikar/talhajuikar.github.io # {"$imagepolicy": "portfolio:blog-policy:name"}
-    newTag: 1.0.38 # {"$imagepolicy": "portfolio:blog-policy:tag"}
+    newTag: 1.0.39 # {"$imagepolicy": "portfolio:blog-policy:tag"}
