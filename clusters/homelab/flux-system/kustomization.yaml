@@ -6,8 +6,7 @@ resources:
 - gotk-components.yaml
 - gotk-sync.yaml
 # - longhorn.yaml
-# - it-tools.yaml
-- namespaces/it-tools
+- it-tools.yaml
 - kube-prometheus-stack.yaml
 # - jenkins.yaml
 - metrics-server.yaml
