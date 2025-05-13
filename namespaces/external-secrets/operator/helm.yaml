@@ -21,6 +21,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: external-secrets
-  valuesFrom:
-    - kind: configMap
-      name: external-secrets-values
+  values:
+  bitwarden-sdk-server:
+    enabled: true

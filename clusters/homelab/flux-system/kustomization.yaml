@@ -6,6 +6,7 @@ resources:
 - gotk-components.yaml
 - gotk-sync.yaml
 # - longhorn.yaml
+- external-secrets-operator.yaml
 - external-secrets.yaml
 - it-tools.yaml
 - kube-prometheus-stack.yaml
