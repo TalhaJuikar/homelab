@@ -12,7 +12,7 @@ replacements:
   - source:
       kind: Secret
       name: bitwarden-credentials
-      fieldPath: data.organization-id
+      fieldPath: stringData.organization-id
     targets:
       - select:
           kind: ClusterSecretStore
@@ -25,7 +25,7 @@ replacements:
   - source:
       kind: Secret
       name: bitwarden-credentials
-      fieldPath: data.project
+      fieldPath: stringData.project
     targets:
       - select:
           kind: ClusterSecretStore
