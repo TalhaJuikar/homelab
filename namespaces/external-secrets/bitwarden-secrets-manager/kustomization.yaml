@@ -4,7 +4,5 @@ metadata:
   name: bitwarden-secrets-manager
   namespace: external-secrets
 resources:
-  - issuer/cluster-issuer.yaml
-  - issuer/certificate.yaml
   - bitwarden-credentials.sops.yaml
   - clustersecretstore.yaml
