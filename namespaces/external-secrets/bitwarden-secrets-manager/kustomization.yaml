@@ -21,8 +21,7 @@ replacements:
           - spec.provider.bitwardensecretsmanager.organizationID
         options:
           create: true
-          encoding:
-            from: base64
+          encoding: base64
   - source:
       kind: Secret
       name: bitwarden-credentials
@@ -35,5 +34,4 @@ replacements:
           - spec.provider.bitwardensecretsmanager.projectID
         options:
           create: true
-          encoding:
-            from: base64
+          encoding: base64
