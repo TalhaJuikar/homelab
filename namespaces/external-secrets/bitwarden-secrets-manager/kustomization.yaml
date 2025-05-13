@@ -6,7 +6,34 @@ metadata:
 resources:
   - bitwarden-credentials.sops.yaml
   - clustersecretstore.yaml
-decryption:
-  provider: sops
-  secretRef:
-    name: flux-system
+
+# Add replacements for secret values
+replacements:
+  - source:
+      kind: Secret
+      name: bitwarden-credentials
+      fieldPath: data.organization-id
+    targets:
+      - select:
+          kind: ClusterSecretStore
+          name: bitwarden-secretsmanager
+        fieldPaths:
+          - spec.provider.bitwardensecretsmanager.organizationID
+        options:
+          create: true
+          encoding:
+            from: base64
+  - source:
+      kind: Secret
+      name: bitwarden-credentials
+      fieldPath: data.project
+    targets:
+      - select:
+          kind: ClusterSecretStore
+          name: bitwarden-secretsmanager
+        fieldPaths:
+          - spec.provider.bitwardensecretsmanager.projectID
+        options:
+          create: true
+          encoding:
+            from: base64
