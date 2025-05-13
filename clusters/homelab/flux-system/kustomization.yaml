@@ -5,12 +5,10 @@ resources:
 # - imagerepository/flux-image-test.yaml
 - gotk-components.yaml
 - gotk-sync.yaml
-# - longhorn.yaml
 - external-secrets-operator.yaml
-- external-secrets.yaml
+- bitwarden-secrets-manager.yaml
 - it-tools.yaml
 - kube-prometheus-stack.yaml
-# - jenkins.yaml
 - metrics-server.yaml
 - blog-website.yaml
 
