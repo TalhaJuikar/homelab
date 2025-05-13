@@ -6,3 +6,7 @@ metadata:
 resources:
   - bitwarden-credentials.sops.yaml
   - clustersecretstore.yaml
+decryption:
+  provider: sops
+  secretRef:
+    name: flux-system
