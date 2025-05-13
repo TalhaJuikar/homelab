@@ -22,5 +22,5 @@ spec:
         kind: HelmRepository
         name: external-secrets
   values:
-  bitwarden-sdk-server:
-    enabled: true
+    bitwarden-sdk-server:
+      enabled: true
