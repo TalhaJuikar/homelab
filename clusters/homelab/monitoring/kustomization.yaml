@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# Temporarily commented out resources to prevent them from being applied
+# resources:
+#   - kube-prometheus-stack.yaml
+#   - loki.yaml
+#   - promtail.yaml
