@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: basic-auth
+  namespace: longhorn-system
+type: Opaque
+data:
+  auth: YWRtaW46JGFwcl8xJDIxYjJFRl9aOVhJOFZkRmh4YzBGZFBkR2ZNRkZ2S1hxNA==
+# user admin, password Network@123

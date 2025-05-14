@@ -3,14 +3,9 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
-- external-secrets-operator.yaml
-- bitwarden-secrets-manager.yaml
-- cf-tunnel-ingress-controller.yaml
-- kubernetes-dashboard.yaml
-- it-tools.yaml
-- kube-prometheus-stack.yaml
-# - metrics-server.yaml
-- blog-website.yaml
+- infrastructure.yaml
+- apps.yaml
+- monitoring.yaml
 
 # Enable SOPS decryption
 patches:

@@ -1,0 +1,28 @@
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: dashboard-transport
+  namespace: kubernetes-dashboard
+spec:
+  insecureSkipVerify: true
+  serverName: kubernetes-dashboard-kong-proxy
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dashboard
+  namespace: kubernetes-dashboard
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`k8s-dash.plutolab.live`)
+    services:
+    - name: kubernetes-dashboard-kong-proxy
+      namespace: kubernetes-dashboard
+      port: 443
+      scheme: https
+      serversTransport: dashboard-transport
