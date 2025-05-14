@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - external-secrets
   - cloudflare-tunnel-ingress-controller
-  # - longhorn-system
+  - longhorn-system
