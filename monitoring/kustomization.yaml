@@ -4,6 +4,6 @@ metadata:
   name: monitoring
 resources:
 - namespace.yaml
-# - kube-promehteus-stack
-# - loki
-# - promtail
+- kube-promehteus-stack
+- loki
+- promtail
