@@ -1,13 +1,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: metrics-server
+  name: promtail
   namespace: flux-system
 spec:
-  targetNamespace: default
+  targetNamespace: monitoring
   interval: 10m0s
-  path: ./monitoring/default/metrics-server
+  path: ./monitoring/monitoring/promtail
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+  dependsOn:
+    - name: loki

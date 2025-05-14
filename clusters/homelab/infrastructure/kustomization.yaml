@@ -4,4 +4,4 @@ resources:
   - external-secrets-operator.yaml
   - bitwarden-secrets-manager.yaml
   - cf-tunnel-ingress-controller.yaml
-  - longhorn.yaml
+  # - longhorn.yaml
