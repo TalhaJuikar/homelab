@@ -20,5 +20,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./namespaces/portfolio
+    path: ./apps/portfolio
     strategy: Setters
