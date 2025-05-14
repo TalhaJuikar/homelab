@@ -4,7 +4,7 @@ resources:
   - base/namespace.yaml
   - base/deployment.yaml
   - base/service.yaml
-#  - base/ingressroute.yaml
+  #  - base/ingressroute.yaml
   - base/ingress.yaml
   - image-automation/image-policy.yaml
   - image-automation/image-repository.yaml
@@ -12,4 +12,4 @@ resources:
 images:
   - name: blog-website
     newName: ghcr.io/talhajuikar/talhajuikar.github.io # {"$imagepolicy": "portfolio:blog-policy:name"}
-    newTag: 1.0.42 # {"$imagepolicy": "portfolio:blog-policy:tag"}
+    newTag: 1.0.44 # {"$imagepolicy": "portfolio:blog-policy:tag"}
