@@ -4,4 +4,4 @@ resources:
   - blog-website.yaml
   - kubernetes-dashboard.yaml
   - it-tools.yaml
-  # - jellyfin.yaml
+  - jellyfin.yaml
