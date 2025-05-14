@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blog-via-cf-tunnel
+  namespace: portfolio
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: talhajuikar.cloud
+    http:
+      paths:
+      - backend:
+          service:
+            name: blog-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  - host: www.talhajuikar.cloud
+    http:
+      paths:
+      - backend:
+          service:
+            name: blog-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}
