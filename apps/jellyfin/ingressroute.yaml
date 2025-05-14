@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jellyfin-ingress
+  namespace: jellyfin
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`jellyfin.plutolab.live`)
+      kind: Rule
+      services:
+        - name: jellyfin-service
+          port: 80
