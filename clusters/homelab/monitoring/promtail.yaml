@@ -6,7 +6,7 @@ metadata:
 spec:
   targetNamespace: monitoring
   interval: 10m0s
-  path: ./monitoring/monitoring/promtail
+  path: ./monitoring/promtail
   prune: true
   sourceRef:
     kind: GitRepository

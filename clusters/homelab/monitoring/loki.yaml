@@ -6,7 +6,7 @@ metadata:
 spec:
   targetNamespace: monitoring
   interval: 10m0s
-  path: ./monitoring/monitoring/loki
+  path: ./monitoring/loki
   prune: true
   sourceRef:
     kind: GitRepository
