@@ -15,3 +15,19 @@ spec:
   values:
     persistence:
       defaultClass: false
+    csi:
+      attacherReplicaCount: 3
+      provisionerReplicaCount: 3
+      resizerReplicaCount: 3
+      snapshotterReplicaCount: 3
+    image:
+      pullPolicy: IfNotPresent
+    engineImage:
+      repository: longhornio/longhorn-engine
+      tag: v1.8.1
+    defaultSettings:
+      createDefaultDiskLabeledNodes: true
+      defaultReplicaCount: 3
+      guaranteedInstanceManagerCPU: 12
+      concurrentAutomaticEngineUpgradePerNodeLimit: 3
+      dataEngine: v1
