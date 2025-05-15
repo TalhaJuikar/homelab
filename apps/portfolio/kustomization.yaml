@@ -4,8 +4,8 @@ resources:
   - base/namespace.yaml
   - base/deployment.yaml
   - base/service.yaml
-  #  - base/ingressroute.yaml
   - base/ingress.yaml
+  - base/github-credentials-secret.yaml
   - image-automation/image-policy.yaml
   - image-automation/image-repository.yaml
   - image-automation/image-update-automation.yaml
