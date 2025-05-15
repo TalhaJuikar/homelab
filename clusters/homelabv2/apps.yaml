@@ -1,0 +1,69 @@
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: blog-website
+#   namespace: flux-system
+# spec:
+#   targetNamespace: portfolio
+#   interval: 5m0s
+#   path: ./apps/portfolio
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: it-tools
+#   namespace: flux-system
+# spec:
+#   targetNamespace: it-tools
+#   interval: 10m0s
+#   path: ./apps/it-tools
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: jellyfin
+#   namespace: flux-system
+# spec:
+#   targetNamespace: jellyfin
+#   interval: 10m0s
+#   path: ./apps/jellyfin
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: kubernetes-dashboard
+#   namespace: flux-system
+# spec:
+#   targetNamespace: kubernetes-dashboard
+#   interval: 10m0s
+#   path: ./apps/kubernetes-dashboard
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: jenkins
+#   namespace: flux-system
+# spec:
+#   targetNamespace: jenkins
+#   interval: 10m0s
+#   path: ./apps/jenkins
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
