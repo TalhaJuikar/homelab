@@ -8,4 +8,3 @@ resources:
   - helmrepo.yaml
   - helmrelease.yaml
   - ingressroute.yaml
-  - basic-auth.yaml
