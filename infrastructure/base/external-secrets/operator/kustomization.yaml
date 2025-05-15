@@ -4,6 +4,5 @@ metadata:
   name: external-secrets-operator
 resources:
   - namespace.yaml
-  - issuer/cluster-issuer.yaml
-  - issuer/certificate.yaml
+  - certificate.yaml
   - helm.yaml
