@@ -1,16 +1,32 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: cert-manager
+  namespace: flux-system
+spec:
+  targetNamespace: cert-manager
+  interval: 10m0s
+  path: ./infrastructure/morpheus/cert-manager
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: external-secrets-operator
   namespace: flux-system
 spec:
   targetNamespace: external-secrets
   interval: 10m0s
-  path: ./infrastructure/base/external-secrets/operator
+  path: ./infrastructure/morpheus/external-secrets/operator
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+  dependsOn:
+    - name: cert-manager
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -20,7 +36,7 @@ metadata:
 spec:
   targetNamespace: external-secrets
   interval: 10m0s
-  path: ./infrastructure/base/external-secrets/bitwarden-secrets-manager
+  path: ./infrastructure/morpheus/external-secrets/bitwarden-secrets-manager
   prune: true
   sourceRef:
     kind: GitRepository
