@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base/cert-manager/letsencrypt-issuer
+
+configMapGenerator:
+  - name: letsencrypt-issuer-env
+    namespace: cert-manager
+    literals:
+    - ACME_EMAIL=talhajukar5@gmail.com
+    - CLOUDFLARE_EMAIL=talhajukar5@gmail.com
+    - CLOUDFLARE_API_TOKEN_ID=1a5c6e73-1b37-4a0f-a516-b2de00c75651
+    - DNS_ZONE=plutolab.live

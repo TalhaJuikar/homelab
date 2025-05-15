@@ -1,0 +1,64 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - letsencrypt-cloudflare-issuer.yaml
+
+replacements:
+  - source:
+      kind: ConfigMap
+      name: letsencrypt-issuer-env
+      fieldPath: data.ACME_EMAIL
+    targets:
+      - select:
+          kind: ClusterIssuer
+          name: letsencrypt-production
+        fieldPaths:
+          - spec.acme.email
+      - select:
+          kind: ClusterIssuer
+          name: letsencrypt-staging
+        fieldPaths:
+          - spec.acme.email
+  
+  - source:
+      kind: ConfigMap
+      name: letsencrypt-issuer-env
+      fieldPath: data.CLOUDFLARE_EMAIL
+    targets:
+      - select:
+          kind: ClusterIssuer
+          name: letsencrypt-production
+        fieldPaths:
+          - spec.acme.solvers.0.dns01.cloudflare.email
+      - select:
+          kind: ClusterIssuer
+          name: letsencrypt-staging
+        fieldPaths:
+          - spec.acme.solvers.0.dns01.cloudflare.email
+  
+  - source:
+      kind: ConfigMap
+      name: letsencrypt-issuer-env
+      fieldPath: data.CLOUDFLARE_API_TOKEN_ID
+    targets:
+      - select:
+          kind: ExternalSecret
+          name: cloudflare-token-secret
+        fieldPaths:
+          - spec.data.0.remoteRef.key
+          
+  - source:
+      kind: ConfigMap
+      name: letsencrypt-issuer-env
+      fieldPath: data.DNS_ZONE
+    targets:
+      - select:
+          kind: ClusterIssuer
+          name: letsencrypt-production
+        fieldPaths:
+          - spec.acme.solvers.0.selector.dnsZones.0
+      - select:
+          kind: ClusterIssuer
+          name: letsencrypt-staging
+        fieldPaths:
+          - spec.acme.solvers.0.selector.dnsZones.0
