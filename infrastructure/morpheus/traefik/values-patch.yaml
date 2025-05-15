@@ -15,35 +15,3 @@ tlsStore:
   default:
     defaultCertificate:
       secretName: plutolab-live-tls
-
-metrics:
-  prometheus:
-    service:
-      enable: true
-    serviceMonitor:
-      enabled: true
-      additionalLabels:
-        release: kube-prometheus
-
-logs:
-  general:
-    format: "json"
-    level: "INFO"
-    filePath: ""
-    noColor: false
-  access:
-    enabled: true
-    format: "json"
-    bufferingSize:
-    filters:
-      statuscodes: "400-499,500-599"
-      retryattempts: false
-      minduration: ""
-    addInternals: false
-    fields:
-      general:
-        defaultmode: keep
-        names: {}
-      headers:
-        defaultmode: drop
-        names: {}
