@@ -4,5 +4,4 @@ metadata:
   name: metallb
   namespace: metallb-system
 resources:
-  - namespace.yaml
   - github.com/metallb/metallb/config/native?ref=v0.14.9
