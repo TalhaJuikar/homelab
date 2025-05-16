@@ -6,6 +6,11 @@ resources:
 configMapGenerator:
   - name: traefik-values
     namespace: traefik
-    behavior: merge
     files:
-      - values.yaml=values-patch.yaml
+      - values.yaml
+
+patchesStrategicMerge:
+  - release-patch.yaml
+
+configurations:
+  - kustomizeconfig.yaml

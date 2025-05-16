@@ -12,7 +12,3 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: traefik
-  valuesFrom:
-    - kind: ConfigMap
-      name: traefik-values
-      valuesKey: values.yaml
