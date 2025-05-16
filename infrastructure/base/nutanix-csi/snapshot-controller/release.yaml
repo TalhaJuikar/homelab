@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: snapshot-controller
+  namespace: ntnx-system
+spec:
+  interval: 10m
+  releaseName: snapshot-controller
+  install:
+    timeout: 5m
+    remediation:
+      retries: 3
+  upgrade:
+    timeout: 5m
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: nutanix-csi-snapshot
+      version: 6.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: nutanix-repo
