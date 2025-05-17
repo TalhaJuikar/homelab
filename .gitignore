@@ -1,1 +1,37 @@
+# Sensitive files
 flux-system-gpg-key.asc
+*.pem
+*.key
+*.crt
+*.asc
+*.gpg
+*id_rsa*
+*id_ed25519*
+*.pfx
+*.p12
+*kubeconfig*
+*.kube/config
+*.env
+*.env.*
+.secrets
+secrets/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Editor files
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.log
+*.bak
+*.tmp

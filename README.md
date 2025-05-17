@@ -1,94 +1,163 @@
-# FluxCD GitOps Configuration
+# 🌐 My Multi-Cluster Kubernetes Setup with FluxCD
 
-This repository contains the GitOps configuration for Kubernetes clusters managed through FluxCD, implementing the infrastructure-as-code approach for declarative and automated cluster management.
+![FluxCD](https://fluxcd.io/img/flux-horizontal-color.png)
 
-## Repository Structure
+This repository contains the complete infrastructure-as-code for my personal Kubernetes clusters managed through GitOps with FluxCD. I've built this system to provide a robust, repeatable, and secure environment for running my homelab services and personal projects.
 
+## Introduction
+
+The purpose of my homelab is to learn, experiment, and gain practical experience with modern infrastructure patterns. As a cloud native engineer, I use this setup to test new techniques before implementing them in professional environments. I deliberately chose to build my workload cluster with KubeADM to understand the intricacies of a production-grade Kubernetes setup and deepen my understanding of Kubernetes internals and management processes that are often abstracted away in managed distributions, complemented by Rancher for cluster lifecycle management. Additionally, self-hosting applications gives me complete control over my data while forcing me to think about the entire lifecycle – from deployment and security to backup strategies and maintenance. All my clusters use Cilium CNI for networking, which provides eBPF-based networking, security, and observability capabilities.
+
+## 🖥️ Cluster Architecture
+
+- **Skynet**: A compact three-node RKE2-based management cluster that runs Rancher for fleet management, allowing me to quickly provision and destroy clusters for experimentation
+- **Morpheus**: A robust six-node KubeADM-based cluster with highly available control planes, ensuring resilience and optimal performance for application workloads.
+
+
+## 🚀 Deployed Applications & Services
+
+### Infrastructure Layer
+
+- **Cilium**: eBPF-based CNI for advanced networking, security, and observability
+- **Longhorn**: Distributed storage solution providing resilient volumes across my clusters
+- **Cert-Manager**: Automatic TLS certificate management for all services
+- **External-Secrets**: Securely syncs credentials from Bitwarden to my clusters
+- **MetalLB**: Bare metal load balancer that assigns IPs to services on my network
+- **Traefik**: Intelligent edge router directing traffic to appropriate services
+- **Cloudflare Tunnel**: Secure external access without exposing my home network
+
+### Application Layer
+
+- **Kubernetes Dashboard** : Web UI for visualizing and managing cluster resources
+- **Jellyfin** : Media server with dedicated persistent storage for media files and configuration
+- **Portfolio Website** : My personal website with automated image updates through Flux. https://talhajuikar.cloud
+- **IT-Tools** : Collection of some handy utilities I use for daily operations
+
+### Monitoring Stack
+
+- **Prometheus**: Multiple federated instances collecting metrics across clusters
+- **Grafana**: Custom dashboards for monitoring system health and application metrics
+- **Loki**: Centralized log aggregation for all applications
+- **Promtail**: DaemonSet running on every node to collect and ship logs to Loki
+
+## 🔄 GitOps Implementation
+
+I've fully embraced the GitOps philosophy for managing my infrastructure, with Flux handling all the heavy lifting:
+
+1. **Source Controller**: Watches this Git repository and automatically detects when I push changes
+2. **Kustomize Controller**: Applies my Kubernetes manifests with proper overlay resolution
+3. **Image Automation Controller**: Automatically updates my container images when new versions are available in my registry
+4. **Helm Controller**: Manages my Helm releases declaratively for components like Longhorn and cert-manager
+
+I've structured dependencies between components through careful Kustomization ordering, which has eliminated deployment race conditions that previously caused issues. For example, cert-manager must be fully operational before any IngressRoute resources with TLS can be deployed.
+
+### Automated Image Updates
+
+One of my favorite features is the automated image updates for my portfolio website:
+
+1. The Image Automation Controller watches my container registry for new image tags
+2. When a new image is detected, Flux automatically:
+   - Updates the manifest in the Git repository
+   - Commits the change with a standardized message via the Flux CD Bot
+   - Applies the updated deployment to the cluster
+
+This creates a fully automated CI/CD pipeline where building a new container image triggers a complete deployment without any manual intervention.
+
+## 🛠️ Workflow and Operations
+
+### How I Deploy New Applications
+
+When I want to add a new application to my clusters, I follow these steps:
+
+1. I develop the base manifests in `apps/base/<application-name>/`, typically starting with a deployment, service, and ingress
+2. I create cluster-specific overlays in `apps/<cluster-name>/<application-name>/` with configuration unique to each environment
+3. I add the application reference to the respective cluster's kustomization in `clusters/<cluster-name>/apps.yaml`
+4. After committing and pushing changes, Flux automatically applies the new resources to my clusters
+
+For example, when I added the IT-Tools deployment, I created the base configuration in `apps/base/it-tools/` with deployment, service, and ingressroute manifests, then created cluster-specific overlays in `apps/morpheus/it-tools/` with Morpheus-specific configurations.
+
+### How I Manage Infrastructure Changes
+
+Infrastructure changes follow a similar pattern but require more careful planning:
+
+1. I make changes to core components in `infrastructure/base/<component-name>/`
+2. I test major changes on the Morpheus cluster first before applying to Skynet
+3. I leverage Flux's dependency management to ensure components deploy in the correct order
+
+### My Troubleshooting Approach
+
+When issues arise, here's how I diagnose them:
+
+```bash
+# I check the Flux controllers for errors
+kubectl logs -n flux-system deployment/source-controller
+
+# I verify the status of my resources
+kubectl get kustomizations,helmreleases -A
+
+# I look at cluster events for clues
+kubectl get events -A --sort-by='.lastTimestamp'
 ```
-fluxcd/
-├── apps/                # Application workloads and deployments
-│   ├── it-tools/        # IT Tools application manifests
-│   ├── jenkins/         # Jenkins CI/CD platform configuration
-│   ├── kubernetes-dashboard/ # Kubernetes Dashboard deployment
-│   ├── jellyfin/        # Jellyfin media server configuration
-│   └── portfolio/       # Portfolio application with image automation
-├── clusters/            # Cluster-specific configuration
-│   └── homelab/         # Homelab Kubernetes cluster
-│       ├── apps/        # App workload definitions for this cluster
-│       ├── flux-system/  # Core FluxCD components (auto-generated)
-│       ├── infrastructure/ # Infrastructure component declarations
-│       └── monitoring/  # Monitoring stack configuration
-├── infrastructure/      # Core infrastructure components
-│   ├── cloudflare-tunnel-ingress-controller/ # Cloudflare Tunnels for ingress
-│   ├── external-secrets/ # External secrets management
-│   │   ├── bitwarden-secrets-manager/ # Bitwarden as secrets backend
-│   │   └── operator/    # External Secrets Operator configuration
-│   └── longhorn-system/ # Longhorn persistent storage system
-├── monitoring/          # Observability components
-│   ├── dashboards/      # Grafana dashboard configurations
-│   ├── kube-prometheus-stack/ # Prometheus monitoring stack
-│   ├── loki/            # Loki log aggregation system
-│   └── promtail/        # Promtail log collection agent
-└── disabled/            # Archived or disabled configurations
-```
 
-## Architecture
+I also heavily rely on my Grafana dashboards to monitor resource usage and performance metrics across all applications.
 
-This repository implements a GitOps approach using FluxCD to manage Kubernetes resources:
+## 🔒 Security Approach
 
-1. **Infrastructure Layer** - Core components that provide foundational services:
-   - Longhorn for distributed storage
-   - External Secrets Operator for secrets management
-   - Cloudflare Tunnel for secure ingress
+Security is a top priority in my setup, and I've implemented several layers of protection:
 
-2. **Application Layer** - Workloads deployed on top of infrastructure:
-   - Jenkins for CI/CD pipelines
-   - Kubernetes Dashboard for cluster visualization
-   - Various application workloads with their configurations
+- **Zero-Trust Architecture**: I use strict RBAC policies that give applications only the permissions they absolutely need
+- **Secrets Management**: I store all sensitive data in Bitwarden and retrieve it dynamically via External Secrets Operator, keeping credentials out of Git
+- **Network Security**: I expose services exclusively through Cloudflare Tunnels, eliminating the need for open inbound ports
+- **GitOps Security**: I've enabled signature verification for my Flux sync operations for integrity validation
+- **Encryption**: All persistent volumes containing sensitive data are encrypted at rest
 
-3. **Monitoring Layer** - Observability stack:
-   - Prometheus and Grafana for metrics collection and visualization
-   - Loki and Promtail for log aggregation
+## 💾 Storage Strategy
 
-## Deployment Flow
+I use multiple storage solutions based on the specific needs of each application:
 
-FluxCD continuously reconciles the desired state in this repository with the actual state in the Kubernetes cluster:
+- **Longhorn**: Provides distributed block storage for most stateful applications
+- **NFS Integration**: External NFS mounts for large media libraries (500GB+ for Jellyfin)
+- **Storage Classes**: Different storage classes for different performance requirements
+- **Persistent Volumes**: Properly configured with appropriate access modes and retention policies
+- **Backup Strategy**: Regular snapshots and off-site backups for critical data
 
-1. FluxCD monitors the Git repository for changes
-2. When changes are detected, FluxCD applies them to the cluster
-3. Dependencies are handled through kustomization ordering:
-   - Infrastructure components are deployed first
-   - Applications and monitoring components follow
+## 🔧 Networking Setup
 
-## Usage Guidelines
+My networking architecture is designed for security and isolation:
 
-### Adding New Applications
+- **CNI**: Cilium provides eBPF-based networking across all clusters with advanced security features
+- **Ingress**: Traefik handles all incoming traffic with proper routing and TLS termination
+- **Service Exposure**: Cloudflare Tunnels provide secure external access without opening ports
+- **Load Balancing**: MetalLB assigns virtual IPs to services on my internal network
+- **Network Policies**: Cilium network policies enforce fine-grained access control between services
 
-1. Create application manifests in the `apps/` directory
-2. Reference the application in the appropriate cluster's `apps/kustomization.yaml`
-3. Commit and push changes to trigger automatic deployment
+## 🔑 Credential Management
 
-### Modifying Infrastructure
+Managing secrets is critical in my setup:
 
-1. Edit the relevant components in the `infrastructure/` directory
-2. Update dependencies in the appropriate kustomization files
-3. Commit and push changes for automatic reconciliation
+- **External Secrets**: I use External Secrets Operator to fetch sensitive data from Bitwarden
+- **Secret Rotation**: Regular rotation of credentials for critical services
+- **Sealed Secrets**: For cases where I need to commit encrypted secrets to Git
+- **Access Controls**: Fine-grained access controls for all credential stores
 
-### Troubleshooting
+## ✨ In Production
 
-If reconciliation issues occur:
-- Check FluxCD logs: `kubectl logs -n flux-system deployment/source-controller`
-- Verify kustomization status: `kubectl get kustomizations -A`
-- Inspect events: `kubectl get events -A --sort-by='.lastTimestamp'`
+This repository represents my actual production infrastructure running today:
 
-## Security Considerations
+- **Media Services**: Jellyfin media server with persistent storage for my media library
+- **Development Tools**: Kubernetes Dashboard and IT-Tools available across clusters
+- **Personal Website**: Portfolio site with automatic image updates via Flux
+- **Infrastructure**: Complete observability stack with Prometheus, Grafana, and Loki
 
-- Sensitive information is managed via External Secrets Operator
-- Bitwarden is used as the secrets backend
-- Authentication for services is handled through basic auth or service-specific methods
+Everything is continuously synchronized through FluxCD, giving me a single source of truth and ensuring that my clusters always reflect the state defined in this repository.
 
-## Prerequisites
+## 🚀 Continuous Improvement
 
-- Kubernetes cluster with FluxCD installed
-- SSH key with access to this Git repository
-- Bitwarden account configured for External Secrets
+I'm constantly evolving this setup as I learn new techniques and technologies. Some of my upcoming plans include:
+
+- Extending my Cilium implementation with advanced network policies
+- Setting up automated image vulnerability scanning
+- Building a disaster recovery process with Velero
+- Implementing more advanced GitOps workflows for application lifecycle management
+
+This repository is a living documentation of my journey with Kubernetes and GitOps. As I continue to refine my approach, I'll update the code here to reflect my current best practices.
