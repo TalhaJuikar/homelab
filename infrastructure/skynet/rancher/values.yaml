@@ -6,3 +6,4 @@ ingress:
   extraAnnotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
 privateCA: true
+additionalTrustedCAs: true
