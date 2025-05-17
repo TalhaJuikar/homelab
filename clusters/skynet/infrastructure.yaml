@@ -71,6 +71,8 @@ spec:
     name: flux-system
   dependsOn:
     - name: cert-manager-issuers
+  wait: true
+  timeout: 5m
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -87,6 +89,8 @@ spec:
     name: flux-system
   dependsOn:
     - name: external-secrets-operator
+  wait: true
+  timeout: 5m
   decryption:
     provider: sops
     secretRef:
