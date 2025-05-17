@@ -120,15 +120,32 @@ spec:
     name: flux-system
   dependsOn:
     - name: metallb
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: letsencrypt-certificates
+#   namespace: flux-system
+# spec:
+#   interval: 10m
+#   path: ./infrastructure/rke2/cert-manager/certificates
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   dependsOn:
+#     - name: letsencrypt-cloudflare-issuer
+#     - name: traefik
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: letsencrypt-certificates
+  name: rancher
   namespace: flux-system
 spec:
-  interval: 10m
-  path: ./infrastructure/rke2/cert-manager/certificates
+  targetNamespace: cattle-system
+  interval: 10m0s
+  path: ./infrastructure/rke2/rancher
   prune: true
   sourceRef:
     kind: GitRepository
