@@ -1,12 +1,41 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: metallb
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infrastructure/skynet/metallb
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: traefik
+  namespace: flux-system
+spec:
+  targetNamespace: traefik
+  interval: 10m0s
+  path: ./infrastructure/skynet/traefik
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: metallb
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: cert-manager
   namespace: flux-system
 spec:
   targetNamespace: cert-manager
   interval: 10m0s
-  path: ./infrastructure/rke2/cert-manager
+  path: ./infrastructure/skynet/cert-manager
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +48,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./infrastructure/rke2/cert-manager/issuers
+  path: ./infrastructure/skynet/cert-manager/issuers
   prune: true
   sourceRef:
     kind: GitRepository
@@ -35,7 +64,7 @@ metadata:
 spec:
   targetNamespace: external-secrets
   interval: 10m0s
-  path: ./infrastructure/rke2/external-secrets/operator
+  path: ./infrastructure/skynet/external-secrets/operator
   prune: true
   sourceRef:
     kind: GitRepository
@@ -51,7 +80,7 @@ metadata:
 spec:
   targetNamespace: external-secrets
   interval: 10m0s
-  path: ./infrastructure/rke2/external-secrets/bitwarden-secrets-manager
+  path: ./infrastructure/skynet/external-secrets/bitwarden-secrets-manager
   prune: true
   sourceRef:
     kind: GitRepository
@@ -70,7 +99,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./infrastructure/rke2/cert-manager/letsencrypt-issuer
+  path: ./infrastructure/skynet/cert-manager/letsencrypt-issuer
   prune: true
   sourceRef:
     kind: GitRepository
@@ -81,71 +110,12 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: reflector
-  namespace: flux-system
-spec:
-  targetNamespace: reflector
-  interval: 10m0s
-  path: ./infrastructure/rke2/reflector
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: metallb
-  namespace: flux-system
-spec:
-  interval: 10m
-  path: ./infrastructure/rke2/metallb
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: traefik
-  namespace: flux-system
-spec:
-  targetNamespace: traefik
-  interval: 10m0s
-  path: ./infrastructure/rke2/traefik
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  dependsOn:
-    - name: metallb
-# ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: letsencrypt-certificates
-#   namespace: flux-system
-# spec:
-#   interval: 10m
-#   path: ./infrastructure/rke2/cert-manager/certificates
-#   prune: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#   dependsOn:
-#     - name: letsencrypt-cloudflare-issuer
-#     - name: traefik
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: rancher
   namespace: flux-system
 spec:
   targetNamespace: cattle-system
   interval: 10m0s
-  path: ./infrastructure/rke2/rancher
+  path: ./infrastructure/skynet/rancher
   prune: true
   sourceRef:
     kind: GitRepository

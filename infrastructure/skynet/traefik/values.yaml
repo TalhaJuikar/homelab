@@ -55,9 +55,3 @@ deployment:
   podAnnotations: {}
   additionalContainers: []
   initContainers: []
-
-tlsStore:
-  default:
-    defaultCertificate:
-      secretName: plutolab-live-tls
-
