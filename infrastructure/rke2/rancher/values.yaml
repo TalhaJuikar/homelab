@@ -5,3 +5,4 @@ ingress:
     source: secret
   extraAnnotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
+privateCA: true
