@@ -7,4 +7,4 @@ resources:
   - namespace.yaml
   - helmrepo.yaml
   - helmrelease.yaml
-  - ingressroute.yaml
+  # - ingressroute.yaml
