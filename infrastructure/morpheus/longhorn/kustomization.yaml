@@ -17,3 +17,5 @@ patchesStrategicMerge:
         defaultSettings:
           defaultDataPath: /mnt/longhorn
           storageReservedPercentageForDefaultDisk: 10
+          defaultReplicaCount: 2
+          defaultClassReplicaCount: 2
