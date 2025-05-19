@@ -35,3 +35,10 @@ Thumbs.db
 *.log
 *.bak
 *.tmp
+
+# Terraform
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.terraform
+*.terraform.*
