@@ -1,0 +1,6 @@
+creation_rules:
+  - path_regex: .*/talsecret(s)?\.sops\.ya?ml
+    pgp: CCEC75297BC309A88157665205DA20FBCBEAC0A9
+  
+  - path_regex: .*/talenv\.sops\.ya?ml
+    pgp: CCEC75297BC309A88157665205DA20FBCBEAC0A9
