@@ -7,6 +7,7 @@ clusterSvcNets:
 cniConfig:
   name: none
 allowSchedulingOnMasters: true
+allowSchedulingOnControlPlanes: true
 nodes:
   - hostname: talos01
     ipAddress: 192.168.203.17
@@ -92,6 +93,10 @@ controlPlane:
     customization:
       extraKernelArgs:
         - net.ifnames=0
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
   certSANs:
     - 192.168.203.83
   nameservers:
@@ -103,6 +108,26 @@ controlPlane:
         path: /machine/kubelet/extraArgs
         value:
           rotate-server-certificates: "true"
+    - |-
+      - op: add
+        path: /machine/kubelet/extraMounts
+        value:
+          - destination: /var/mnt/storage-volume
+            type: bind
+            source: /var/mnt/storage-volume
+            options:
+              - bind
+              - rshared
+              - rw
+  userVolumes:
+    - name: storage-volume
+      provisioning:
+        diskSelector:
+          match: 'disk.size > 280u * GB && disk.size < 340u * GB && !system_disk'
+        minSize: "290GiB"
+        maxSize: "310GiB"
+      filesystem:
+        type: ext4
 
 # worker:
 #   schematic:
