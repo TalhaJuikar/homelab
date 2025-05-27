@@ -1,171 +1,171 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: traefik
-  namespace: flux-system
-spec:
-  targetNamespace: traefik
-  interval: 10m0s
-  path: ./infrastructure/morpheus/traefik
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: cert-manager
-  namespace: flux-system
-spec:
-  targetNamespace: cert-manager
-  interval: 10m0s
-  path: ./infrastructure/morpheus/cert-manager
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: cert-manager-issuers
-  namespace: flux-system
-spec:
-  interval: 10m
-  path: ./infrastructure/morpheus/cert-manager/issuers
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  dependsOn:
-    - name: cert-manager
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: external-secrets-operator
-  namespace: flux-system
-spec:
-  targetNamespace: external-secrets
-  interval: 10m0s
-  path: ./infrastructure/morpheus/external-secrets/operator
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  dependsOn:
-    - name: cert-manager-issuers
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: bitwarden-secrets-manager
-  namespace: flux-system
-spec:
-  targetNamespace: external-secrets
-  interval: 10m0s
-  path: ./infrastructure/morpheus/external-secrets/bitwarden-secrets-manager
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  dependsOn:
-    - name: external-secrets-operator
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-gpg
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: letsencrypt-cloudflare-issuer
-  namespace: flux-system
-spec:
-  interval: 10m
-  path: ./infrastructure/morpheus/cert-manager/letsencrypt-issuer
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  dependsOn:
-    - name: bitwarden-secrets-manager
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: reflector
-  namespace: flux-system
-spec:
-  targetNamespace: reflector
-  interval: 10m0s
-  path: ./infrastructure/morpheus/reflector
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: letsencrypt-certificates
-  namespace: flux-system
-spec:
-  interval: 10m
-  path: ./infrastructure/morpheus/cert-manager/certificates
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  dependsOn:
-    - name: letsencrypt-cloudflare-issuer
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: longhorn
-  namespace: flux-system
-spec:
-  targetNamespace: longhorn-system
-  interval: 10m0s
-  path: ./infrastructure/morpheus/longhorn
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: nutanix-csi-snapshot-controller
-  namespace: flux-system
-spec:
-  targetNamespace: ntnx-system
-  interval: 10m0s
-  path: ./infrastructure/morpheus/nutanix-csi/snapshot-controller
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  wait: true
-  timeout: 5m0s
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: nutanix-csi-storage
-  namespace: flux-system
-spec:
-  targetNamespace: ntnx-system
-  interval: 10m0s
-  path: ./infrastructure/morpheus/nutanix-csi/storage
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  wait: true
-  timeout: 5m0s
-  dependsOn:
-    - name: bitwarden-secrets-manager
-    - name: nutanix-csi-snapshot-controller
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: traefik
+#   namespace: flux-system
+# spec:
+#   targetNamespace: traefik
+#   interval: 10m0s
+#   path: ./infrastructure/morpheus/traefik
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: cert-manager
+#   namespace: flux-system
+# spec:
+#   targetNamespace: cert-manager
+#   interval: 10m0s
+#   path: ./infrastructure/morpheus/cert-manager
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: cert-manager-issuers
+#   namespace: flux-system
+# spec:
+#   interval: 10m
+#   path: ./infrastructure/morpheus/cert-manager/issuers
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   dependsOn:
+#     - name: cert-manager
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: external-secrets-operator
+#   namespace: flux-system
+# spec:
+#   targetNamespace: external-secrets
+#   interval: 10m0s
+#   path: ./infrastructure/morpheus/external-secrets/operator
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   dependsOn:
+#     - name: cert-manager-issuers
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: bitwarden-secrets-manager
+#   namespace: flux-system
+# spec:
+#   targetNamespace: external-secrets
+#   interval: 10m0s
+#   path: ./infrastructure/morpheus/external-secrets/bitwarden-secrets-manager
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   dependsOn:
+#     - name: external-secrets-operator
+#   decryption:
+#     provider: sops
+#     secretRef:
+#       name: sops-gpg
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: letsencrypt-cloudflare-issuer
+#   namespace: flux-system
+# spec:
+#   interval: 10m
+#   path: ./infrastructure/morpheus/cert-manager/letsencrypt-issuer
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   dependsOn:
+#     - name: bitwarden-secrets-manager
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: reflector
+#   namespace: flux-system
+# spec:
+#   targetNamespace: reflector
+#   interval: 10m0s
+#   path: ./infrastructure/morpheus/reflector
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: letsencrypt-certificates
+#   namespace: flux-system
+# spec:
+#   interval: 10m
+#   path: ./infrastructure/morpheus/cert-manager/certificates
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   dependsOn:
+#     - name: letsencrypt-cloudflare-issuer
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: longhorn
+#   namespace: flux-system
+# spec:
+#   targetNamespace: longhorn-system
+#   interval: 10m0s
+#   path: ./infrastructure/morpheus/longhorn
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: nutanix-csi-snapshot-controller
+#   namespace: flux-system
+# spec:
+#   targetNamespace: ntnx-system
+#   interval: 10m0s
+#   path: ./infrastructure/morpheus/nutanix-csi/snapshot-controller
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   wait: true
+#   timeout: 5m0s
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: nutanix-csi-storage
+#   namespace: flux-system
+# spec:
+#   targetNamespace: ntnx-system
+#   interval: 10m0s
+#   path: ./infrastructure/morpheus/nutanix-csi/storage
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   wait: true
+#   timeout: 5m0s
+#   dependsOn:
+#     - name: bitwarden-secrets-manager
+#     - name: nutanix-csi-snapshot-controller
