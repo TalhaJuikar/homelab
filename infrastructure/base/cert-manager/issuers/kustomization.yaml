@@ -1,4 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - bitwarden-issuers.yaml
+  - bitwarden-bootstrap-issuer.yaml
+  - bitwarden-bootstrap-certificate.yaml
+  - bitwarden-certificate-issuer.yaml
