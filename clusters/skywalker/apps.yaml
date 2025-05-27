@@ -6,7 +6,7 @@ metadata:
 spec:
   targetNamespace: kubelet-serving-cert-approver
   interval: 10m0s
-  path: ./apps/ricky/kubelet-serving-cert-approver
+  path: ./apps/skywalker/kubelet-serving-cert-approver
   prune: true
   sourceRef:
     kind: GitRepository
