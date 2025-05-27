@@ -1,8 +1,26 @@
-# 🌐 My Multi-Cluster Kubernetes Setup with FluxCD
 
-![FluxCD](https://fluxcd.io/img/flux-horizontal-color.png)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![FluxCD](https://img.shields.io/badge/FluxCD-326CE5?style=for-the-badge&logo=flux&logoColor=white)
+![Cilium](https://img.shields.io/badge/Cilium-F8C517?style=for-the-badge&logo=cilium&logoColor=black)
+![Traefik](https://img.shields.io/badge/Traefik-24A1C1?style=for-the-badge&logo=traefik&logoColor=black)
+![Self-Host](https://img.shields.io/badge/SelfHosted-34C1F1?style=for-the-badge&link=https%3A%2F%2Ftalhajuikar.cloud)
 
-This repository contains the complete infrastructure-as-code for my personal Kubernetes clusters managed through GitOps with FluxCD. I've built this system to provide a robust, repeatable, and secure environment for running my homelab services and personal projects.
+
+This repository houses the complete infrastructure-as-code for my personal Kubernetes homelab environment managed through GitOps with FluxCD. Built as both a learning platform and production environment, this system provides a robust, repeatable, and secure foundation for running my homelab services and personal projects.
+
+## 📋 Table of Contents
+- [Introduction](#introduction)
+- [Cluster Architecture](#️-cluster-architecture)
+- [Deployed Applications & Services](#-deployed-applications--services)
+- [GitOps Implementation](#-gitops-implementation)
+- [Workflow and Operations](#️-workflow-and-operations)
+- [Security Approach](#-security-approach)
+- [Storage Strategy](#-storage-strategy)
+- [Networking Setup](#-networking-setup)
+- [Credential Management](#-credential-management)
+- [In Production](#-in-production)
+- [Continuous Improvement](#-continuous-improvement)
+- [Repository Structure](#-repository-structure)
 
 ## Introduction
 
@@ -10,9 +28,14 @@ The purpose of my homelab is to learn, experiment, and gain practical experience
 
 ## 🖥️ Cluster Architecture
 
-- **Skynet**: A compact three-node RKE2-based management cluster that runs Rancher for fleet management, allowing me to quickly provision and destroy clusters for experimentation
-- **Morpheus**: A robust six-node KubeADM-based cluster with highly available control planes, ensuring resilience and optimal performance for application workloads.
+![Architecture Diagram](https://mermaid.ink/img/pako:eNp9kk1vgzAMhv9KlJMRTdM07TLtUKnHnXbYbYcpOGA1kCjEVdWq_76EQDW-7GKc55VtYjtBaRXBDNZGu_sOVu8JKJ2djtBijyrBsKxRNT88jMlYRVfw9npXavSaWNGpkfMmM1p0cPzmgtmti7YiXYVwfbxLBe_NZkzUzG1q0SVCBICJleQHei8n73X6JP5dwlO_T0MwUVllRjR2qBi6iiVi7xgkryRHwGCHptTC5IJb2TSwHzsykWLSKd9y9pdtCyqiX2yTqoT0IlTQP1NpUlnPFalOGB-R5OKaktQhEFS5NDkXBLOycQmuL77t5_nz_LT4BTs7i9dF4XPuOlmV2tq4OpLiZsTmVzPj2IzrWjEUd7fRpu9pF_Sbvo8_v5Od0VuKzwbVvDZUGVyC4RFSz1WVEy_BbE3a_wNytL6b?type=png)
 
+My multi-cluster architecture consists of:
+
+- **Skynet**: A compact three-node RKE2-based management cluster that runs Rancher for fleet management, allowing me to quickly provision and destroy clusters for experimentation
+- **Morpheus** *(Decommissioned)* : A robust six-node KubeADM-based cluster with highly available control planes, ensuring resilience and optimal performance for application workloads
+- **Skywalker**: A specialized Talos Linux-based cluster for specific workloads requiring enhanced security. Sucessor to Morpheus, leveraging Talos's immutable infrastructure model.
+- **Swanson**: A development/testing cluster for trying out new configurations
 
 ## 🚀 Deployed Applications & Services
 
@@ -28,10 +51,10 @@ The purpose of my homelab is to learn, experiment, and gain practical experience
 
 ### Application Layer
 
-- **Kubernetes Dashboard** : Web UI for visualizing and managing cluster resources
-- **Jellyfin** : Media server with dedicated persistent storage for media files and configuration
-- **Portfolio Website** : My personal website with automated image updates through Flux. https://talhajuikar.cloud
-- **IT-Tools** : Collection of some handy utilities I use for daily operations
+- **Kubernetes Dashboard**: Web UI for visualizing and managing cluster resources
+- **Jellyfin**: Media server with dedicated persistent storage for media files and configuration
+- **Portfolio Website**: My personal website with automated image updates through Flux. [talhajuikar.cloud](https://talhajuikar.cloud)
+- **IT-Tools**: Collection of some handy utilities I use for daily operations
 
 ### Monitoring Stack
 
@@ -43,6 +66,8 @@ The purpose of my homelab is to learn, experiment, and gain practical experience
 ## 🔄 GitOps Implementation
 
 I've fully embraced the GitOps philosophy for managing my infrastructure, with Flux handling all the heavy lifting:
+
+![GitOps Flow](https://mermaid.ink/img/pako:eNptUstuwjAQ_BVrT0WqRNRbpYpLT730C6I9mGQJLo4d2QsIIf69ThwIFMrF692Z8c7uCZTRAlJYa1neFLC6L0BqWa5zw0nTFvDJvDCRytxYbU0G2ALXFQsRFxCMUeD0pAg2pGql2CzzRodoqV4gGCOlvX5C1k4WZUZlDei-jLaSjJHcNQQmYGm0ec67ZHPXhjPW8PW9dWR9MLfiMele0b3XalHGqOQdtX_mdzWvlW5m2BrmnbO_1DgapZyuJ8VVcM_OUjrhNa3UzRpm2Orak_LsWGkx-V5PMOyeKkkZl9hI-H6KtVWF2uh3Cnf-iQwpHpxo86Od4Hz4lomzZHqqLJ1Qa60LSKkjJtqdlLQxki0k630Zx5RYDZ8UJ0z1oyK2Z-lgiaidUDQF7R_KPa1j9AdNHrSN?type=png)
 
 1. **Source Controller**: Watches this Git repository and automatically detects when I push changes
 2. **Kustomize Controller**: Applies my Kubernetes manifests with proper overlay resolution
@@ -125,6 +150,8 @@ I use multiple storage solutions based on the specific needs of each application
 
 My networking architecture is designed for security and isolation:
 
+![Network Architecture](https://mermaid.ink/img/pako:eNqFU11vmzAU_SuWn4JUNWn6krzspZr2MGn7A6Z5MHAbrIKNbJNtivLfd22gIdlaHmzf4-Nzji_3DEplBabQa1Hs32E1PwlSLd5jDSs0KZbipUVV_fSxTsbky2D79W4zseiIFODVneEKS56YV9rZoHe0WESmd5aUQRyRj5pxGjKGKxoOy1oJqfN68PlnAXec1dRSQUTX0bpGQWecKeoDPKdJ-Izo9PdCyBvGpBDe6xTs2-YdW8-9hw7I-_3-9h1Ac6uuI-ls3J28DFkczs5XzzfG7vUUlXk-GdhNX3U2M9l8cRUyg_f6T1topLP4_QHlQYqvMrmQl3OU2EDn2DvwxD_L51BCJ-l8Y4q11Alz7h-XU6ClaOKVNz6I0rTQuwYFLppSAAVrHOKdCgbPgnZ_KyIMvr9VwntFYxVMP5xhns0R16pDdVmL9ari5vp9tNOFylksW3Omr0-9n-oSc8K5NPagSEtxxO4fNdrnn0InNxo3e2sMU-qeOgctjDilrtmJaj2XOpsGXNDswmjXKVpA2pfnbl7gzul4eWqo22HXf7XG8jx9GqSDmFDT36XDG7T_iDX8d6hpLJrsU3Ihc6OLC5zXRZ3-AEQORz8?type=png)
+
 - **CNI**: Cilium provides eBPF-based networking across all clusters with advanced security features
 - **Ingress**: Traefik handles all incoming traffic with proper routing and TLS termination
 - **Service Exposure**: Cloudflare Tunnels provide secure external access without opening ports
@@ -159,5 +186,31 @@ I'm constantly evolving this setup as I learn new techniques and technologies. S
 - Setting up automated image vulnerability scanning
 - Building a disaster recovery process with Velero
 - Implementing more advanced GitOps workflows for application lifecycle management
+
+## 📁 Repository Structure
+
+```
+├── apps/                  # Application manifests
+│   ├── base/              # Base configurations for all applications
+│   ├── morpheus/          # Morpheus cluster-specific application overlays
+│   ├── skynet/            # Skynet cluster-specific application overlays
+│   ├── skywalker/         # Skywalker cluster-specific application overlays
+│   └── swanson/           # Swanson cluster-specific application overlays
+├── clusters/              # Cluster-specific configuration
+│   ├── morpheus/          # Morpheus cluster configuration and Flux system
+│   ├── skynet/            # Skynet cluster configuration and Flux system
+│   ├── skywalker/         # Skywalker cluster configuration and Flux system
+│   └── swanson/           # Swanson cluster configuration and Flux system
+├── infrastructure/        # Core infrastructure components
+│   ├── base/              # Base configurations for infrastructure components
+│   ├── morpheus/          # Morpheus-specific infrastructure configurations
+│   ├── skynet/            # Skynet-specific infrastructure configurations
+│   ├── skywalker/         # Skywalker-specific infrastructure configurations
+│   └── swanson/           # Swanson-specific infrastructure configurations
+├── monitoring/            # Observability stack components
+│   └── base/              # Base configurations for monitoring
+├── talos/                 # Talos Linux configuration
+└── Terraform/             # Infrastructure provisioning with Terraform
+```
 
 This repository is a living documentation of my journey with Kubernetes and GitOps. As I continue to refine my approach, I'll update the code here to reflect my current best practices.
