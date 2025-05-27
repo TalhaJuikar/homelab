@@ -20,7 +20,7 @@ metadata:
 spec:
   targetNamespace: kube-system
   interval: 10m0s
-  path: ./apps/ricky/metrics-server
+  path: ./apps/skywalker/metrics-server
   prune: true
   sourceRef:
     kind: GitRepository
