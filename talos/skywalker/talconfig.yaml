@@ -1,0 +1,152 @@
+clusterName: skywalker
+endpoint: https://192.168.203.50:6443
+kubernetesVersion: v1.32.4
+clusterPodNets:
+  - 10.244.0.0/16
+clusterSvcNets:
+  - 10.96.0.0/12
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: skywalker-master-01
+    ipAddress: 192.168.203.51
+    installDisk: /dev/sda
+    controlPlane: true
+    networkInterfaces:
+      - interface: ens18
+        addresses:
+          - 192.168.203.51/22
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.200.1
+        vip:
+          ip: 192.168.203.50
+
+  - hostname: skywalker-master-02
+    ipAddress: 192.168.203.52
+    installDisk: /dev/sda
+    controlPlane: true
+    networkInterfaces:
+      - interface: ens18
+        addresses:
+          - 192.168.203.52/22
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.200.1
+        vip:
+          ip: 192.168.203.50
+
+  - hostname: skywalker-master-03
+    ipAddress: 192.168.203.53
+    installDisk: /dev/sda
+    controlPlane: true
+    networkInterfaces:
+      - interface: ens18
+        addresses:
+          - 192.168.203.53/22
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.200.1
+        vip:
+          ip: 192.168.203.50
+
+  - hostname: skywalker-worker-01
+    ipAddress: 192.168.203.54
+    installDisk: /dev/sda
+    controlPlane: false
+    networkInterfaces:
+      - interface: ens18
+        addresses:
+          - 192.168.203.54/22
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.200.1
+
+  - hostname: skywalker-worker-02
+    ipAddress: 192.168.203.55
+    installDisk: /dev/sda
+    controlPlane: false
+    networkInterfaces:
+      - interface: ens18
+        addresses:
+          - 192.168.203.55/22
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.200.1
+
+
+  # - hostname: skywalker-worker-03
+  #   ipAddress: 192.168.203.56
+  #   installDisk: /dev/sda
+  #   controlPlane: false
+  #   networkInterfaces:
+  #     - interface: ens18
+  #       addresses:
+  #         - 192.168.203.56/22
+  #       routes:
+  #         - network: 0.0.0.0/0
+  #           gateway: 192.168.200.1
+
+controlPlane:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/qemu-guest-agent
+  certSANs:
+    - 192.168.203.50
+  nameservers:
+    - 192.168.202.2
+    - 192.168.201.69
+    - 8.8.8.8
+
+  patches:
+    - |-
+      - op: add
+        path: /machine/kubelet/extraArgs
+        value:
+          rotate-server-certificates: "true"
+
+worker:
+  schematic:
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
+          - siderolabs/qemu-guest-agent
+
+  nameservers:
+    - 192.168.202.2
+    - 192.168.201.69
+    - 8.8.8.8
+  patches:
+    - |-
+      - op: add
+        path: /machine/kubelet/extraArgs
+        value:
+          rotate-server-certificates: "true"
+    - |-
+      - op: add
+        path: /machine/kubelet/extraMounts
+        value:
+          - destination: /var/mnt/longhorn
+            type: bind
+            source: /var/mnt/longhorn
+            options:
+              - bind
+              - rshared
+              - rw
+  userVolumes:
+    - name: longhorn
+      provisioning:
+        diskSelector:
+          match: 'disk.size > 500u * GB && disk.size < 550u * GB && !system_disk'
+        minSize: "460GiB"
+      filesystem:
+        type: ext4
