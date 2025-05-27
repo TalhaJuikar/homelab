@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base/cert-manager/letsencrypt-issuer
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/data/0/remoteRef/key
+        value: "1a5c6e73-1b37-4a0f-a516-b2de00c75651"
+    target:
+      kind: ExternalSecret
+      name: cloudflare-token-secret
+  
+  - patch: |-
+      - op: replace
+        path: /spec/acme/email
+        value: "talhajukar5@gmail.com"
+      - op: replace
+        path: /spec/acme/solvers/0/dns01/cloudflare/email
+        value: "talhajukar5@gmail.com"
+      - op: replace
+        path: /spec/acme/solvers/0/selector/dnsZones/0
+        value: "plutolab.live"
+    target:
+      kind: ClusterIssuer
+      name: letsencrypt-production
+  
+  - patch: |-
+      - op: replace
+        path: /spec/acme/email
+        value: "talhajukar5@gmail.com"
+      - op: replace
+        path: /spec/acme/solvers/0/dns01/cloudflare/email
+        value: "talhajukar5@gmail.com"
+      - op: replace
+        path: /spec/acme/solvers/0/selector/dnsZones/0
+        value: "plutolab.live"
+    target:
+      kind: ClusterIssuer
+      name: letsencrypt-staging
