@@ -21,7 +21,7 @@ server:
       valueFrom:
         secretKeyRef:
             name: authentik-creds
-            key: secret_key
+            key: secret-key
   ingress:
       ingressClassName: traefik
       enabled: true
@@ -39,4 +39,4 @@ worker:
           valueFrom:
             secretKeyRef:
                 name: authentik-creds
-                key: secret_key
+                key: secret-key
