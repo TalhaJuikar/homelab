@@ -1,6 +1,9 @@
 authentik:
+    secret_key: env://AUTHENTIK_SECRET_KEY
     error_reporting:
         enabled: false
+    postgresql:
+        password: env://AUTHENTIK_POSTGRESQL__PASSWORD
 
 postgresql:
     enabled: true
