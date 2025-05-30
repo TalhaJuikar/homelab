@@ -19,7 +19,7 @@ server:
       valueFrom:
         secretKeyRef:
             name: authentik-creds
-            key: postgres-password
+            key: password
     - name: AUTHENTIK_SECRET_KEY
       valueFrom:
         secretKeyRef:
@@ -37,7 +37,7 @@ worker:
           valueFrom:
             secretKeyRef:
                 name: authentik-creds
-                key: postgres-password
+                key: password
         - name: AUTHENTIK_SECRET_KEY
           valueFrom:
             secretKeyRef:
