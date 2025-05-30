@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base/authentik
+  - external-secret.yaml
+
+configMapGenerator:
+  - name: authentik-values
+    namespace: authentik
+    files:
+      - values.yaml
+
+configurations:
+  - kustomizeconfig.yaml
+
+patchesStrategicMerge:
+  - |-
+    apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    kind: HelmRelease
+    metadata:
+      name: authentik
+      namespace: authentik
+    spec:
+      valuesFrom:
+        - kind: ConfigMap
+          name: authentik-values
+          valuesKey: values.yaml

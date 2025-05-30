@@ -1,0 +1,42 @@
+authentik:
+    error_reporting:
+        enabled: false
+
+postgresql:
+    enabled: true
+    auth:
+        existingSecret: authentik-creds
+
+redis:
+    enabled: true
+
+server:
+  env:
+    - name: AUTHENTIK_POSTGRESQL__PASSWORD
+      valueFrom:
+        secretKeyRef:
+            name: authentik-creds
+            key: postgres-password
+    - name: AUTHENTIK_SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+            name: authentik-creds
+            key: secret_key
+  ingress:
+      ingressClassName: traefik
+      enabled: true
+      hosts:
+          - sso.plutolab.live
+
+worker:
+    env:
+        - name: AUTHENTIK_POSTGRESQL__PASSWORD
+          valueFrom:
+            secretKeyRef:
+                name: authentik-creds
+                key: postgres-password
+        - name: AUTHENTIK_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+                name: authentik-creds
+                key: secret_key
