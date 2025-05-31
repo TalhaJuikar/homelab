@@ -87,17 +87,17 @@ nodes:
             gateway: 192.168.200.1
 
 
-  # - hostname: skywalker-worker-03
-  #   ipAddress: 192.168.203.56
-  #   installDisk: /dev/sda
-  #   controlPlane: false
-  #   networkInterfaces:
-  #     - interface: ens18
-  #       addresses:
-  #         - 192.168.203.56/22
-  #       routes:
-  #         - network: 0.0.0.0/0
-  #           gateway: 192.168.200.1
+  - hostname: skywalker-worker-03
+    ipAddress: 192.168.203.56
+    installDisk: /dev/sda
+    controlPlane: false
+    networkInterfaces:
+      - interface: ens18
+        addresses:
+          - 192.168.203.56/22
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.200.1
 
 controlPlane:
   schematic:
@@ -111,7 +111,7 @@ controlPlane:
     - 192.168.203.50
   nameservers:
     - 192.168.202.2
-    - 192.168.201.69
+    - 192.168.202.3
     - 8.8.8.8
 
   patches:
@@ -134,7 +134,7 @@ worker:
 
   nameservers:
     - 192.168.202.2
-    - 192.168.201.69
+    - 192.168.202.3
     - 8.8.8.8
   patches:
     - |-
