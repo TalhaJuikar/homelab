@@ -30,6 +30,8 @@ server:
       enabled: true
       hosts:
           - sso.plutolab.live
+      tls:
+        - secretName: plutolab-live-tls
 
 worker:
     env:
