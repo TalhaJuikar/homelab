@@ -6,7 +6,7 @@ metadata:
 spec:
   targetNamespace: monitoring
   interval: 10m0s
-  path: ./monitoring/kube-promehteus-stack
+  path: ./monitoring/skywalker/kube-promehteus-stack
   prune: true
   sourceRef:
     kind: GitRepository
