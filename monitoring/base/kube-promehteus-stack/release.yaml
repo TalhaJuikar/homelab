@@ -12,37 +12,37 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
-  values:
-    namespaceOverride: "monitoring"
-    grafana:
-      additionalDataSources:
-        - name: Loki
-          type: loki
-          uid: loki
-          access: proxy
-          url: http://loki.monitoring.svc.cluster.local:3100
-          isDefault: false
-          # jsonData:
-          #   maxLines: 1000
-          editable: false
-    prometheus:
-        prometheusSpec:
-          storageSpec:
-            volumeClaimTemplate:
-              spec:
-                accessModes: ["ReadWriteOnce"]
-                resources:
-                  requests:
-                    storage: 100Gi
-              selector: {}
-          retention: 30d
-    alertmanager:
-        alertmanagerSpec:
-          storage:
-            volumeClaimTemplate:
-              spec:
-                accessModes: ["ReadWriteOnce"]
-                resources:
-                  requests:
-                    storage: 20Gi
-              selector: {}
+  # values:
+  #   namespaceOverride: "monitoring"
+  #   grafana:
+  #     additionalDataSources:
+  #       - name: Loki
+  #         type: loki
+  #         uid: loki
+  #         access: proxy
+  #         url: http://loki.monitoring.svc.cluster.local:3100
+  #         isDefault: false
+  #         # jsonData:
+  #         #   maxLines: 1000
+  #         editable: false
+  #   prometheus:
+  #       prometheusSpec:
+  #         storageSpec:
+  #           volumeClaimTemplate:
+  #             spec:
+  #               accessModes: ["ReadWriteOnce"]
+  #               resources:
+  #                 requests:
+  #                   storage: 100Gi
+  #             selector: {}
+  #         retention: 30d
+  #   alertmanager:
+  #       alertmanagerSpec:
+  #         storage:
+  #           volumeClaimTemplate:
+  #             spec:
+  #               accessModes: ["ReadWriteOnce"]
+  #               resources:
+  #                 requests:
+  #                   storage: 20Gi
+  #             selector: {}
