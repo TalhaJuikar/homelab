@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: actual-budget-ingressroute
+  namespace: actual-budget
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`budget.plutolab.live`)
+      kind: Rule
+      services:
+        - name: actual-server
+          port: 5006

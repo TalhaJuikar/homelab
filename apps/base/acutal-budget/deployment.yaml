@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actual-server
+  namespace: actual-budget
+  labels:
+    app: actual-budget
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: actual-budget
+  template:
+    metadata:
+      labels:
+        app: actual-budget
+    spec:
+      containers:
+      - name: actual-server
+        image: docker.io/actualbudget/actual-server:latest
+        ports:
+        - containerPort: 5006
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: actual-data
+          mountPath: /data
+      volumes:
+      - name: actual-data
+        persistentVolumeClaim:
+          claimName: actual-data-pvc
