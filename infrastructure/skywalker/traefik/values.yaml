@@ -7,12 +7,12 @@ additionalArguments:
 
 ports:
   web:
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
-          permanent: true
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+        permanent: true
+        priority: 10
   websecure:
     http3:
       enabled: true
