@@ -5,30 +5,11 @@
 ![Traefik](https://img.shields.io/badge/Traefik-24A1C1?style=for-the-badge&logo=traefik&logoColor=black)
 ![Self-Host](https://img.shields.io/badge/SelfHosted-34C1F1?style=for-the-badge&link=https%3A%2F%2Ftalhajuikar.cloud)
 
-
-This repository houses the complete infrastructure-as-code for my personal Kubernetes homelab environment managed through GitOps with FluxCD. Built as both a learning platform and production environment, this system provides a robust, repeatable, and secure foundation for running my homelab services and personal projects.
-
-## 📋 Table of Contents
-- [Introduction](#-introduction)
-- [GitOps Implementation](#-gitops-implementation)
-- [Cluster Architecture](#️-cluster-architecture)
-- [Deployed Applications & Services](#-deployed-applications--services)
-- [Security Approach](#-security-approach)
-- [Credential Management](#-credential-management)
-- [Storage Strategy](#-storage-strategy)
-- [Networking Setup](#-networking-setup)
-- [Workflow and Operations](#️-workflow-and-operations)
-- [Continuous Improvement](#-continuous-improvement)
-- [Repository Structure](#-repository-structure)
-
 ## ✨ Introduction
 
 The purpose of my homelab is to learn, experiment, and gain practical experience with modern infrastructure patterns. As a cloud native engineer, I use this setup to test new techniques before implementing them in professional environments. 
 
-I deliberately chose to build my workload cluster with KubeADM to understand the intricacies of a production-grade Kubernetes setup and deepen my understanding of Kubernetes internals and management processes that are often abstracted away in managed distributions, complemented by Rancher for cluster lifecycle management. Additionally, self-hosting applications gives me complete control over my data while forcing me to think about the entire lifecycle – from deployment and security to backup strategies and maintenance. 
-
-This repository represents my actual production infrastructure running today. 
-Everything is continuously synchronized through FluxCD, giving me a single source of truth and ensuring that my clusters always reflect the state defined in this repository.
+Everything is continuously synchronized through FluxCD, giving me a single source of truth and ensuring that my clusters always reflect the state defined in this repository. Built as both a learning platform and production environment, this system provides a robust, repeatable, and secure foundation for running my homelab services and personal projects.
 
 ## 🔄 GitOps Implementation
 
@@ -41,15 +22,9 @@ I've fully embraced the GitOps philosophy for managing my infrastructure, with F
 
 I've structured dependencies between components through careful Kustomization ordering, which has eliminated deployment race conditions that previously caused issues. For example, cert-manager must be fully operational before any IngressRoute resources with TLS can be deployed.
 
-## 🖥️ Cluster Architecture
+## 🖥️ Clusters
 
-My multi-cluster architecture consists of:
-
-- **Skynet**: A compact three-node RKE2-based management cluster that runs Rancher for fleet management, allowing me to quickly provision and destroy clusters for experimentation
-- **Morpheus** *(Decommissioned)* : A robust six-node KubeADM-based cluster with highly available control planes, ensuring resilience and optimal performance for application workloads
-- **Skywalker**: A specialized Talos Linux-based cluster for specific workloads requiring enhanced security. Sucessor to Morpheus, leveraging Talos's immutable infrastructure model.
-- **Swanson**: A dedicated cluster for services that are exposed to the internet, such as my portfolio website and Jellyfin media server. This cluster is designed with strict security policies and network isolation to minimize exposure.
-- **Gringotts** *(Blueprint)* : A dedicated talos based cluster running HashiCorp Vault for secure secrets management, ensuring that sensitive data is stored and accessed securely across all clusters.
+- **Skywalker**: A Talos Linux-based cluster with highly available control planes leveraging Talos's immutable infrastructure model.
 
 ## 🚀 Deployed Applications & Services
 
@@ -66,7 +41,6 @@ My multi-cluster architecture consists of:
 ### Application Layer
 
 - **Kubernetes Dashboard**: Web UI for visualizing and managing cluster resources
-- **Jellyfin**: Media server with dedicated persistent storage for media files and configuration
 - **Portfolio Website**: My personal website with automated image updates through Flux. [talhajuikar.cloud](https://talhajuikar.cloud)
 - **IT-Tools**: Collection of some handy utilities I use for daily operations
 
@@ -96,8 +70,6 @@ Security is a top priority in my setup, and I've implemented several layers of p
 - **Zero-Trust Architecture**: I use strict RBAC policies that give applications only the permissions they absolutely need
 - **Secrets Management**: I store all sensitive data in Bitwarden and retrieve it dynamically via External Secrets Operator, keeping credentials out of Git. Also I use SOPS to encrypt sensitive files in the repository.
 - **Network Security**: I expose services exclusively through Cloudflare Tunnels, eliminating the need for open inbound ports
-- **GitOps Security**: I've enabled signature verification for my Flux sync operations for integrity validation
-- **Encryption**: All persistent volumes containing sensitive data are encrypted at rest
 
 ## 🔑 Credential Management
 
@@ -114,7 +86,6 @@ Managing secrets is critical in my setup:
 I use multiple storage solutions based on the specific needs of each application:
 
 - **Longhorn**: Provides distributed block storage for most stateful applications. Also allows me to create snapshots and backups of critical data.
-- **External NFS Provisioners**: External NFS mounts for large media libraries (500GB+ for Jellyfin)
 - **Backup Strategy**: Regular snapshots and off-site backups for critical data
 
 ## 🔧 Networking Setup
@@ -165,34 +136,8 @@ Infrastructure changes follow a similar pattern but require more careful plannin
 
 I'm constantly evolving this setup as I learn new techniques and technologies. Some of my upcoming plans include:
 
-- Migrating to Talos Linux for all clusters to leverage its immutable infrastructure model
-- Setting up a federated application deployment strategy to ensure high availability across clusters for critical services such as my portfolio website
 - Building a disaster recovery process with Velero
 - Implementing more advanced GitOps workflows for application lifecycle management
 
-## 📁 Repository Structure
 
-```
-├── apps/                  # Application manifests
-│   ├── base/              # Base configurations for all applications
-│   ├── morpheus/          # Morpheus cluster-specific application overlays
-│   ├── skynet/            # Skynet cluster-specific application overlays
-│   ├── skywalker/         # Skywalker cluster-specific application overlays
-│   └── swanson/           # Swanson cluster-specific application overlays
-├── clusters/              # Cluster-specific configuration
-│   ├── morpheus/          # Morpheus cluster configuration and Flux system
-│   ├── skynet/            # Skynet cluster configuration and Flux system
-│   ├── skywalker/         # Skywalker cluster configuration and Flux system
-│   └── swanson/           # Swanson cluster configuration and Flux system
-├── infrastructure/        # Core infrastructure components
-│   ├── base/              # Base configurations for infrastructure components
-│   ├── morpheus/          # Morpheus-specific infrastructure configurations
-│   ├── skynet/            # Skynet-specific infrastructure configurations
-│   ├── skywalker/         # Skywalker-specific infrastructure configurations
-│   └── swanson/           # Swanson-specific infrastructure configurations
-├── monitoring/            # Observability stack components
-│   └── base/              # Base configurations for monitoring
-├── talos/                 # Talos Linux configuration
-└── Terraform/             # Infrastructure provisioning with Terraform
-```
 This repository is a living documentation of my journey with Kubernetes and GitOps. As I continue to refine my approach, I'll update the code here to reflect my current best practices.
