@@ -181,3 +181,19 @@ spec:
     name: flux-system
   dependsOn:
     - name: letsencrypt-cloudflare-issuer
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: newt
+  namespace: flux-system
+spec:
+  targetNamespace: newt
+  interval: 10m
+  path: ./infrastructure/skywalker/newt
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: bitwarden-secrets-manager

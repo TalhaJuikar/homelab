@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newt
+  namespace: newt
+  labels:
+    app: newt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: newt
+  template:
+    metadata:
+      labels:
+        app: newt
+    spec:
+      containers:
+      - name: newt
+        image: fosrl/newt
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - secretRef:
+            name: newt-secrets
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "200m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      restartPolicy: Always
