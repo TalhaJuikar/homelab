@@ -1,19 +1,19 @@
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: kube-prometheus-stack
-#   namespace: flux-system
-# spec:
-#   targetNamespace: monitoring
-#   interval: 10m0s
-#   path: ./monitoring/skywalker/kube-prometheus-stack
-#   prune: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#   dependsOn:
-#     - name: longhorn
-#     - name: traefik
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kube-prometheus-stack
+  namespace: flux-system
+spec:
+  targetNamespace: monitoring
+  interval: 10m0s
+  path: ./monitoring/skywalker/kube-prometheus-stack
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: longhorn
+    - name: traefik
 # ---
 # apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
