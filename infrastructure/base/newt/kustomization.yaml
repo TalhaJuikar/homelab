@@ -5,5 +5,4 @@ namespace: newt
 
 resources:
 - namespace.yaml
-- externalsecret.yaml
 - deployment.yaml
