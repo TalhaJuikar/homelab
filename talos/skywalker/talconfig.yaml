@@ -1,5 +1,5 @@
 clusterName: skywalker
-endpoint: https://192.168.203.30:6443
+endpoint: https://192.168.202.101:6443
 allowSchedulingOnControlPlanes: true
 kubernetesVersion: v1.33.3
 talosVersion: v1.10.6
@@ -23,46 +23,46 @@ patches:
 
 nodes:
   - hostname: skywalker-master-01
-    ipAddress: 192.168.203.31
+    ipAddress: 192.168.201.31
     installDisk: /dev/sda
     controlPlane: true
     networkInterfaces:
       - interface: ens3
         addresses:
-          - 192.168.203.31/22
+          - 192.168.201.31/22
         routes:
           - network: 0.0.0.0/0
             gateway: 192.168.200.1
         vip:
-          ip: 192.168.203.30
+          ip: 192.168.202.101
 
   - hostname: skywalker-master-02
-    ipAddress: 192.168.203.32
+    ipAddress: 192.168.201.32
     installDisk: /dev/sda
     controlPlane: true
     networkInterfaces:
       - interface: ens3
         addresses:
-          - 192.168.203.32/22
+          - 192.168.201.32/22
         routes:
           - network: 0.0.0.0/0
             gateway: 192.168.200.1
         vip:
-          ip: 192.168.203.30
+          ip: 192.168.202.101
 
   - hostname: skywalker-master-03
-    ipAddress: 192.168.203.33
+    ipAddress: 192.168.201.33
     installDisk: /dev/sda
     controlPlane: true
     networkInterfaces:
       - interface: ens3
         addresses:
-          - 192.168.203.33/22
+          - 192.168.201.33/22
         routes:
           - network: 0.0.0.0/0
             gateway: 192.168.200.1
         vip:
-          ip: 192.168.203.30
+          ip: 192.168.202.101
 
 
   # - hostname: skywalker-worker-01
@@ -105,17 +105,16 @@ nodes:
 controlPlane:
   schematic:
     customization:
-      extraKernelArgs:
-        - net.ifnames=0
+      # extraKernelArgs:
+      #   - net.ifnames=0
       systemExtensions:
         officialExtensions:
           - siderolabs/iscsi-tools
           - siderolabs/util-linux-tools
   certSANs:
-    - 192.168.203.30
+    - 192.168.202.101
   nameservers:
     - 192.168.202.2
-    - 192.168.202.3
     - 8.8.8.8
 
   patches:
@@ -135,6 +134,10 @@ controlPlane:
               - bind
               - rshared
               - rw
+    - |-
+      - op: replace
+        path: /machine/nodeLabels
+        value: {}
   userVolumes:
     - name: longhorn
       provisioning:
