@@ -13,9 +13,9 @@ patchesStrategicMerge:
     spec:
       values:
         persistence:
-          defaultClassReplicaCount: 2
+          defaultClassReplicaCount: 3
         defaultSettings:
-          defaultreplicaCount: 2
+          defaultreplicaCount: 3
           defaultDataPath: /var/mnt/longhorn
           storageReservedPercentageForDefaultDisk: 5
   - |-
