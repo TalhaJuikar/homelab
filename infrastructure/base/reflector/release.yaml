@@ -4,6 +4,8 @@ metadata:
   name: reflector
   namespace: reflector
 spec:
+  driftDetection:
+    mode: enabled
   interval: 10m
   chart:
     spec:

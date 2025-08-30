@@ -5,6 +5,8 @@ metadata:
   name: authentik
   namespace: authentik
 spec:
+  driftDetection:
+    mode: enabled
   chart:
     spec:
       chart: authentik

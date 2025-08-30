@@ -4,11 +4,13 @@ metadata:
   name: longhorn
   namespace: longhorn-system
 spec:
+  driftDetection:
+    mode: enabled
   interval: 10m
   chart:
     spec:
       chart: longhorn
-      version: 1.8.1
+      version: 1.9.1
       sourceRef:
         kind: HelmRepository
         name: longhorn-repo
