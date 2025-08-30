@@ -47,3 +47,22 @@ spec:
     - name: longhorn
   wait: true
   timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: portfolio
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./apps/skywalker/portfolio
+  targetNamespace: portfolio
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: bitwarden-secrets-manager
+    - name: cloudflare-tunnel-ingress-controller
+  wait: true
+  timeout: 5m

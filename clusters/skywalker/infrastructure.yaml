@@ -25,7 +25,7 @@
 #   sourceRef:
 #     kind: GitRepository
 #     name: flux-system
-# ---    
+---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -146,6 +146,21 @@ metadata:
 spec:
   interval: 10m
   path: ./infrastructure/skywalker/cert-manager/letsencrypt-issuer
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: bitwarden-secrets-manager
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cloudflare-tunnel-ingress-controller
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infrastructure/skywalker/cloudflare-tunnel-ingress-controller
   prune: true
   sourceRef:
     kind: GitRepository
