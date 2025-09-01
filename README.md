@@ -11,17 +11,6 @@ The purpose of my homelab is to learn, experiment, and gain practical experience
 
 Everything is continuously synchronized through FluxCD, giving me a single source of truth and ensuring that my clusters always reflect the state defined in this repository. Built as both a learning platform and production environment, this system provides a robust, repeatable, and secure foundation for running my homelab services and personal projects.
 
-## 🔄 GitOps Implementation
-
-I've fully embraced the GitOps philosophy for managing my infrastructure, with Flux handling all the heavy lifting:
-
-1. **Source Controller**: Watches this Git repository and automatically detects when I push changes
-2. **Kustomize Controller**: Applies my Kubernetes manifests with proper overlay resolution
-3. **Image Automation Controller**: Automatically updates my container images when new versions are available in my registry
-4. **Helm Controller**: Manages my Helm releases declaratively for components like Longhorn and cert-manager
-
-I've structured dependencies between components through careful Kustomization ordering, which has eliminated deployment race conditions that previously caused issues. For example, cert-manager must be fully operational before any IngressRoute resources with TLS can be deployed.
-
 ## 🖥️ Clusters
 
 - **Skywalker**: A Talos Linux-based cluster with highly available control planes leveraging Talos's immutable infrastructure model.
@@ -41,7 +30,7 @@ I've structured dependencies between components through careful Kustomization or
 ### Application Layer
 
 - **Kubernetes Dashboard**: Web UI for visualizing and managing cluster resources
-- **Portfolio Website**: My personal website with automated image updates through Flux. [talhajuikar.cloud](https://talhajuikar.cloud)
+- **Portfolio Website**: My personal website with automated image updates through Flux. [talhajuikar.com](https://talhajuikar.com)
 - **IT-Tools**: Collection of some handy utilities I use for daily operations
 
 ### Monitoring Stack
@@ -65,11 +54,10 @@ This creates a fully automated CI/CD pipeline where building a new container ima
 
 ## 🔒 Security Approach
 
-Security is a top priority in my setup, and I've implemented several layers of protection:
+I've implemented several layers of protection:
 
-- **Zero-Trust Architecture**: I use strict RBAC policies that give applications only the permissions they absolutely need
 - **Secrets Management**: I store all sensitive data in Bitwarden and retrieve it dynamically via External Secrets Operator, keeping credentials out of Git. Also I use SOPS to encrypt sensitive files in the repository.
-- **Network Security**: I expose services exclusively through Cloudflare Tunnels, eliminating the need for open inbound ports
+- **Network Security**: I expose services to the internet exclusively through Cloudflare Tunnels, eliminating the need for open inbound ports
 
 ## 🔑 Credential Management
 
@@ -78,7 +66,6 @@ Managing secrets is critical in my setup:
 - **External Secrets**: I use External Secrets Operator to fetch sensitive data from Bitwarden
 - **Secret Rotation**: Regular rotation of credentials for critical services
 - **Sealed Secrets**: For cases where I need to commit encrypted secrets to Git
-- **Access Controls**: Fine-grained access controls for all credential stores
 
 
 ## 💾 Storage Strategy
@@ -95,7 +82,7 @@ My networking architecture is designed for security and isolation:
 - **CNI**: Cilium provides eBPF-based networking across all clusters with advanced security features
 - **Ingress**: Traefik handles all incoming traffic with proper routing and TLS termination
 - **Service Exposure**: Cloudflare Tunnels provide secure external access without opening ports
-- **Load Balancing**: MetalLB assigns virtual IPs to services on my internal network
+- **Load Balancing**: MetalLB assigns LB IPs to services on my internal network
 - **Network Policies**: Cilium network policies enforce fine-grained access control between services
 
 ## 🛠️ Workflow and Operations
@@ -132,12 +119,6 @@ Infrastructure changes follow a similar pattern but require more careful plannin
 2. I test major changes on the a temporary dev cluster that I spin up using rancher cluster first before applying to my production clusters
 3. I leverage Flux's dependency management to ensure components deploy in the correct order
 
-## 🚀 Continuous Improvement
+---
 
-I'm constantly evolving this setup as I learn new techniques and technologies. Some of my upcoming plans include:
-
-- Building a disaster recovery process with Velero
-- Implementing more advanced GitOps workflows for application lifecycle management
-
-
-This repository is a living documentation of my journey with Kubernetes and GitOps. As I continue to refine my approach, I'll update the code here to reflect my current best practices.
+This repository is a living documentation of my journey with Kubernetes and GitOps. As I continue to refine my approach, I'll update the code here to reflect my current followed practices.
