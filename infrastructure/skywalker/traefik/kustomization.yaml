@@ -12,15 +12,5 @@ configMapGenerator:
 configurations:
   - kustomizeconfig.yaml
 
-patchesStrategicMerge:
-  - |-
-    apiVersion: helm.toolkit.fluxcd.io/v2beta1
-    kind: HelmRelease
-    metadata:
-      name: traefik
-      namespace: traefik
-    spec:
-      valuesFrom:
-        - kind: ConfigMap
-          name: traefik-values
-          valuesKey: values.yaml
+patches:
+  - path: hr-patch.yaml

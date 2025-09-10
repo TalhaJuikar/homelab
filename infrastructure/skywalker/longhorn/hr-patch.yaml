@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  values:
+    persistence:
+      defaultClassReplicaCount: 3
+    defaultSettings:
+      defaultreplicaCount: 3
+      defaultDataPath: /var/mnt/longhorn
+      storageReservedPercentageForDefaultDisk: 5
