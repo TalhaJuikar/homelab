@@ -12,24 +12,6 @@ configMapGenerator:
 configurations:
   - kustomizeconfig.yaml
 
-patchesStrategicMerge:
-  - |-
-    apiVersion: helm.toolkit.fluxcd.io/v2beta1
-    kind: HelmRelease
-    metadata:
-      name: kube-prometheus
-      namespace: monitoring
-    spec:
-      valuesFrom:
-        - kind: ConfigMap
-          name: kube-prometheus-values
-          valuesKey: values.yaml
-  - |-
-    apiVersion: v1
-    kind: Namespace
-    metadata:
-      name: monitoring
-      labels:
-        pod-security.kubernetes.io/enforce: privileged
-        pod-security.kubernetes.io/audit: privileged
-        pod-security.kubernetes.io/warn: privileged
+patches:
+  - path: namespace-patch.yaml
+  - path: hr-patch.yaml
